@@ -1,0 +1,1157 @@
+{
+ "meta": {
+  "builtAt": "2026-09-26T10:27:07.074Z",
+  "note": "AgriShield Asistanı bilgi tabanı. Rakamlar facts.ts'den, kurallar karar motorundan üretilir.",
+  "counts": {
+   "qa": 38,
+   "facts": 35,
+   "glossary": 24,
+   "rules": 9
+  }
+ },
+ "qa": [
+  {
+   "id": "S1",
+   "q": "Bu, TARSİM'in zaten yaptığı şey değil mi? TARSİM'in yaptığından farkı ne?",
+   "a": "TARSİM'in köy bazlı kuraklık ürünü de endeks bazlı ve başvurusuz, bunu biliyoruz. Ama iki eksiği var: köy ortalamasına göre ödüyor, yani tarlası kuruyan ama köyü iyi olan çiftçi alamıyor; ve hasattan sonra ödüyor. 2026'da Tekirdağ'da parsel bazlı pilot başladı; bunun ülkeye yayılması için milyonlarca parselde ölçüm gerekiyor. Biz TARSİM'in rakibi değil, bu ölçüm ve otomasyon altyapısıyız.",
+   "owner": "Bedirhan",
+   "tags": [
+    "tarsim",
+    "fark",
+    "rakip",
+    "koy bazli",
+    "parsel bazli",
+    "tekirdag",
+    "konumlandirma"
+   ],
+   "sources": [
+    {
+     "title": "TARSİM — Köy Bazlı Verim Sigortası",
+     "url": "https://www.tarsim.gov.tr/subPage/koy-bazli-verim-sigortasi"
+    },
+    {
+     "title": "Sabah Tekirdağ, 24.08.2026",
+     "url": "https://www.sabah.com.tr/tekirdag/2026/08/24/tekirdagda-yeni-nesli-tarim-sigortasinda-sigortalilik-orani-yuzde-80in-uzerine-cikti"
+    }
+   ]
+  },
+  {
+   "id": "S2",
+   "q": "Sigorta şirketi neden sizi kullansın?",
+   "a": "Üç sebep var: eksper maliyeti ve süresi düşer (2024'te 471 bin hasar ihbarı var), hasar ön tespitiyle şüpheli ihbarlar ayıklanır ve şirket parsel bazlı ürün satabilir hale gelir. Üstelik ilk faz hizmetimiz mevcut sürece eklenir, regülasyon değişikliği gerektirmez.",
+   "owner": "Bedirhan",
+   "tags": [
+    "sigorta sirketi",
+    "musteri",
+    "neden",
+    "eksper",
+    "ihbar",
+    "deger"
+   ],
+   "sources": [
+    {
+     "title": "TARSİM 2024 Faaliyet Raporu",
+     "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+    }
+   ]
+  },
+  {
+   "id": "S3",
+   "q": "Gelir modeliniz tam olarak ne? Kim, kime, ne kadar ödüyor?",
+   "a": "Çiftçiden para almıyoruz. TARSİM ve havuz şirketleri bize parsel başı sezonluk izleme ücreti ödüyor; örneğin ₺50, bu ortalama bitkisel primin yaklaşık %1'i. Ek gelirler: bankalara risk skoru API'si, kooperatiflere istasyon kiralama, kamuya kuraklık haritası.",
+   "owner": "Bedirhan",
+   "tags": [
+    "gelir",
+    "is modeli",
+    "ucret",
+    "para",
+    "kazanc",
+    "izleme ucreti",
+    "fiyat"
+   ]
+  },
+  {
+   "id": "S4",
+   "q": "Pazar büyüklüğünüzü nasıl hesapladınız?",
+   "a": "Aşağıdan yukarıya hesapladık. Türkiye'de 2024'te 2,7 milyon bitkisel ürün poliçesi var ve primi ₺15 milyar. Hepsine parsel izleme verilse yıllık ~₺135 milyonluk bir hizmet pazarı eder. İlk üç yılda GAP ağırlıklı olarak poliçelerin %2–5'ine ulaşmayı hedefliyoruz: yıllık ₺2,7–6,8 milyon. Veri ve API gelirleri bunun üstüne.",
+   "owner": "Bedirhan",
+   "tags": [
+    "pazar",
+    "tam",
+    "sam",
+    "som",
+    "buyukluk",
+    "hesap"
+   ],
+   "sources": [
+    {
+     "title": "TARSİM 2024 Faaliyet Raporu",
+     "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+    }
+   ]
+  },
+  {
+   "id": "S5",
+   "q": "İlk müşteriniz kim olacak? Pilot nerede?",
+   "a": "Plan şu: Şanlıurfa'da bir tarım kooperatifiyle bir sezon gölge mod pilot, ~100 parsel, gerçek ödeme yok. Sistem her parsel için 'öderdim/ödemezdim' kararını kaydediyor, sezon sonunda gerçek verimle karşılaştırıyoruz. Paralelde havuz üyesi bir sigorta şirketine ilk faz hizmetini (hasar ön tespiti) sunmayı hedefliyoruz; henüz bir kurumla imzalı bir anlaşmamız yok.",
+   "owner": "Bedirhan",
+   "tags": [
+    "pilot",
+    "musteri",
+    "golge mod",
+    "sanliurfa",
+    "kooperatif",
+    "ilk"
+   ]
+  },
+  {
+   "id": "S6",
+   "q": "Prim ne kadar olacak, nasıl hesaplıyorsunuz?",
+   "a": "Prim = beklenen hasar + gider ve güvenlik payı. Örnek: ₺100.000 bedelli bir poliçede tetiklenme olasılığı yılda %10, tetiklenince ödeme ₺50.000 ise beklenen hasar ₺5.000 olur; %25 payla prim ₺6.250 eder, %70 devlet desteğiyle çiftçi ₺1.875 öder. Siverek için ERA5 ile yaptığımız geriye dönük testte yağışa dayalı iki tanık 35 sezonun 7'sinde tetiklenirdi (≤%20, üst yaklaşım). Yapay zekânın işi bu olasılığı parsel parsel doğru tahmin etmek.",
+   "owner": "Aleyna",
+   "tags": [
+    "prim",
+    "fiyat",
+    "hesaplama",
+    "ne kadar",
+    "beklenen hasar",
+    "destek",
+    "backtest"
+   ],
+   "sources": [
+    {
+     "title": "ERA5 / Open-Meteo arşiv API'si",
+     "url": "https://open-meteo.com/en/docs/historical-weather-api"
+    }
+   ]
+  },
+  {
+   "id": "S7",
+   "q": "Basis risk nedir, sizde ne kadar?",
+   "a": "Ölçtüğümüz endeks ile çiftçinin gerçek zararı arasındaki fark. Parsel bazlı ölçüm, üç bağımsız tanık ve belirsiz vakaları eksperin önüne koyan hibrit yapıyla azaltıyoruz. Sahada ölçülmüş bir değerimiz henüz yok, gölge mod pilotta gerçek hasat verimiyle ölçeceğiz. Geçmiş veride şunu gördük: 2024–25 kuraklığı kışın yaşandı; yağışa dayalı kural onu yakalamıyor — bitkiyi doğrudan gören uydu tanığının neden gerekli olduğunu gösteriyor.",
+   "owner": "Aleyna",
+   "tags": [
+    "basis risk",
+    "baz riski",
+    "fark",
+    "hata",
+    "olcum",
+    "gercek zarar"
+   ],
+   "sources": [
+    {
+     "title": "ERA5 / Open-Meteo arşiv API'si",
+     "url": "https://open-meteo.com/en/docs/historical-weather-api"
+    }
+   ]
+  },
+  {
+   "id": "S8",
+   "q": "Eksperler işsiz mi kalacak?",
+   "a": "Hayır. Net vakaları otomatik çözüyoruz, belirsiz vakaları eksperin önüne koyuyoruz. Eksper zamanını gerçekten gereken yere harcıyor. Dolu gibi yerinde görülmesi gereken hasarlarda da eksperi doğru parsele yönlendiriyoruz: eksperi verimli yapıyoruz.",
+   "owner": "Ferhat",
+   "tags": [
+    "eksper",
+    "issiz",
+    "istihdam",
+    "hasar tespit"
+   ]
+  },
+  {
+   "id": "S9",
+   "q": "Hasarların yarısından fazlası dolu. Siz doluyu nasıl çözeceksiniz?",
+   "a": "Dolu ani ve yerel bir hasar; eksper sistemi dolu için iyi çalışıyor. Biz eksperin en zorlandığı yavaş ve geniş risklere, kuraklığa ve sıcak hava dalgasına odaklandık. Dolu için ödeme yapmıyoruz; MGM radar verisi ve uydunun önce/sonra görüntüsüyle 'hangi parseller dolu yedi' listesini çıkarıp eksper rotasını hızlandırıyoruz.",
+   "owner": "Ferhat",
+   "tags": [
+    "dolu",
+    "hasar radari",
+    "kapsam",
+    "yuzde 54"
+   ],
+   "sources": [
+    {
+     "title": "TARSİM 2024 Faaliyet Raporu",
+     "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+    }
+   ]
+  },
+  {
+   "id": "S10",
+   "q": "Çiftçi akıllı telefon kullanamıyorsa?",
+   "a": "Çiftçinin hiçbir şey kurması gerekmiyor. Poliçe TARSİM/ÇKS kaydı üzerinden yapılıyor, bildirimler SMS ve sesli mesajla geliyor, para zaten kullandığı banka hesabına yatıyor. İlk temas noktası kooperatif temsilcisi.",
+   "owner": "Ferhat",
+   "tags": [
+    "telefon",
+    "ciftci",
+    "uygulama",
+    "sms",
+    "erisim",
+    "kullanim"
+   ]
+  },
+  {
+   "id": "S11",
+   "q": "Çiftçi sensörü sularsa ya da yerini değiştirirse? Sensörü sularsam ne olur?",
+   "a": "Üç katmanlı koruma var. Bir: istasyon çiftçinin değil, kooperatifin/sigortacının; tarafsız bir noktada, kilitli, kutu açılma, eğim sensörü ve GPS'i var. İki: yağmur yokken nem birden artarsa veri 'şüpheli' işaretlenir ve istasyon tanığı devre dışı kalır. Üç: yer tanığı tek başına ödeme yaptıramaz, uydu ya da meteoroloji de doğrulamalı. Demoda bunu canlı gösteriyoruz.",
+   "owner": "Ferhat",
+   "tags": [
+    "manipulasyon",
+    "sensor",
+    "sulamak",
+    "hile",
+    "kurcalama",
+    "guvenlik",
+    "sularsam"
+   ],
+   "sources": [
+    {
+     "title": "Örnek kanıt sayfası (7F3A)",
+     "url": "/k/7F3A"
+    }
+   ]
+  },
+  {
+   "id": "S12",
+   "q": "Bulutlu havada uydu ne işe yarar?",
+   "a": "İki cevabımız var. Birincisi, bulutu delen Sentinel-1 radarını yedek göz olarak kullanıyoruz. İkincisi, kuraklık dönemleri genelde bulutsuz, açık havalı dönemlerdir. Ayrıca bulutlu dönemde karar yer istasyonu ve meteoroloji tanıklarıyla verilebilir.",
+   "owner": "Aleyna",
+   "tags": [
+    "bulut",
+    "uydu",
+    "sentinel-1",
+    "radar",
+    "gorus"
+   ],
+   "sources": [
+    {
+     "title": "Copernicus Data Space Ecosystem",
+     "url": "https://dataspace.copernicus.eu/"
+    }
+   ]
+  },
+  {
+   "id": "S13",
+   "q": "10 metre çözünürlük küçük parseller için yeterli mi?",
+   "a": "5 dekarlık bir parsel yaklaşık 50 piksel eder, bu yeterli. 1 dekarın altındaki çok küçük parsellerde kenar etkisi olur; orada köy istasyonu ve bölgesel veri ağırlık kazanır. Gerekirse ticari yüksek çözünürlüklü uydu verisi eklenebilir.",
+   "owner": "Aleyna",
+   "tags": [
+    "cozunurluk",
+    "10 metre",
+    "kucuk parsel",
+    "piksel",
+    "sentinel-2"
+   ],
+   "sources": [
+    {
+     "title": "Copernicus Data Space Ecosystem",
+     "url": "https://dataspace.copernicus.eu/"
+    }
+   ]
+  },
+  {
+   "id": "S14",
+   "q": "Sensör bozulursa ne olur?",
+   "a": "İstasyon her ölçümle birlikte pil ve sağlık bilgisi gönderiyor. Veri gelmezse ya da çevre verisiyle tutarsızsa alarm düşüyor. Arıza döneminde karar uydu ve meteoroloji ile veriliyor; iki tanık yine yeterli.",
+   "owner": "Ferhat",
+   "tags": [
+    "ariza",
+    "bozulma",
+    "sensor",
+    "yedek",
+    "pil"
+   ]
+  },
+  {
+   "id": "S15",
+   "q": "Neden LoRa? Neden GSM değil?",
+   "a": "Ölçümlerimiz çok küçük, bir SMS'ten bile küçük. LoRa bunları kırsalda kilometrelerce, çok az enerjiyle taşıyor. GSM daha çok pil harcar, cihaz başına abonelik ister ve kırsalda çekmeyebilir. Kapsama iyi olan yerde NB-IoT da kullanabiliriz; iletişim katmanı değiştirilebilir. Demoda Wi-Fi, sahada LoRa kullanılır.",
+   "owner": "Ferhat",
+   "tags": [
+    "lora",
+    "gsm",
+    "iletisim",
+    "gateway",
+    "nb-iot",
+    "wifi"
+   ]
+  },
+  {
+   "id": "S16",
+   "q": "İstasyonun maliyeti ve pil ömrü nedir?",
+   "a": "Saha istasyonu için hedefimiz ~$500–1.000 (endüstriyel sensörlerle). Köy başına bir tane olduğu için parsel başına ~$8'e düşüyor (yaklaşık, gerçek teklif alınacak). Cihaz zamanının çoğunu derin uykuda geçiriyor ve güneş paneliyle sezonlarca bakımsız çalışacak şekilde tasarlanıyor; prototipte ölçülmüş bir pil ömrü değerimiz henüz yok.",
+   "owner": "Ferhat",
+   "tags": [
+    "maliyet",
+    "pil",
+    "istasyon",
+    "fiyat",
+    "enerji",
+    "gunes paneli"
+   ]
+  },
+  {
+   "id": "S17",
+   "q": "Modeli hangi veriyle eğittiniz?",
+   "a": "Hedef açık veriler: TÜİK ilçe bazlı verim (etiket), MODIS ve Sentinel-2 NDVI, ERA5-Land ve CHIRPS yağış/toprak nemi; TARSİM hasar kayıtları kamuya açık değil, pilot ortaklığıyla erişmeyi hedefliyoruz. Dürüst durum: prototipteki hakem skoru henüz eğitilmiş bir model değil, uzman ayarlı ve açıklanabilir bir skordur. Meteoroloji tanığının 'normal'i ise gerçek ERA5 1991–2020 verisinden hesaplanıyor.",
+   "owner": "Aleyna",
+   "tags": [
+    "model",
+    "egitim",
+    "veri",
+    "xgboost",
+    "yapay zeka",
+    "etiket"
+   ],
+   "sources": [
+    {
+     "title": "ERA5 / Open-Meteo arşiv API'si",
+     "url": "https://open-meteo.com/en/docs/historical-weather-api"
+    }
+   ]
+  },
+  {
+   "id": "S18",
+   "q": "%88 accuracy dediniz. Test ettiniz mi?",
+   "a": "Yarı finalde bunlar hedef değerlerdi. Kuraklık nadir bir olay olduğu için accuracy yanıltıcı: her parsele 'kuraklık yok' diyen bir model bile yüksek accuracy alır. Bu yüzden recall ve precision'ı birlikte raporlayacağız. Henüz sahada test edilmiş bir model sonucumuz yok; yaptığımız ölçüm, ERA5 ile yağış kuralının 35 sezonluk geriye dönük testi (7 sezonda tetik).",
+   "owner": "Aleyna",
+   "tags": [
+    "accuracy",
+    "dogruluk",
+    "test",
+    "recall",
+    "precision",
+    "metrik"
+   ]
+  },
+  {
+   "id": "S19",
+   "q": "Neden XGBoost ve LSTM? Basit bir eşik yetmez mi?",
+   "a": "Sabit eşik her yerde aynı çalışmıyor: killi topraktaki %15 nem ile kumlu topraktaki %15 aynı şey değil; Mart'taki düşük NDVI normal, Nisan sonundaki değil. Model bu bağlamı öğrenip parsele özel eşik ve prim üretiyor. LSTM'i sadece erken uyarı için kullanıyoruz. Ödeme kuralı ise basit ve şeffaf kalıyor: üç tanıktan ikisi.",
+   "owner": "Aleyna",
+   "tags": [
+    "xgboost",
+    "lstm",
+    "esik",
+    "neden yapay zeka",
+    "model"
+   ]
+  },
+  {
+   "id": "S20",
+   "q": "Model yanlış karar verirse sorumlusu kim?",
+   "a": "Model tek başına ödeme kararı vermiyor. Karar, poliçede önceden yazılı ve herkesin görebildiği kurala göre üç ölçümün oylamasıyla veriliyor. Poliçeyi düzenleyen sigorta şirketi; biz teknoloji sağlayıcıyız ve her kararın kanıtını saklıyoruz. Çiftçinin itiraz hakkı da korunuyor.",
+   "owner": "Aleyna",
+   "tags": [
+    "sorumluluk",
+    "yanlis karar",
+    "hata",
+    "itiraz",
+    "hukuk"
+   ],
+   "sources": [
+    {
+     "title": "Örnek kanıt sayfası (7F3A)",
+     "url": "/k/7F3A"
+    }
+   ]
+  },
+  {
+   "id": "S21",
+   "q": "İklim değişiyor. Geçmişle eğitilen model geleceği bilebilir mi?",
+   "a": "Haklı bir endişe; buna 'kavram kayması' deniyor. Walk-forward doğrulama kullanıyoruz, modeli her sezon yeniden eğitiyoruz, 'normal'i sabit değil kayan bir pencereyle hesaplıyoruz. En önemlisi: ödeme kararı modele değil ölçüme bağlı. İklim değişse bile ölçüm gerçeği gösterir.",
+   "owner": "Aleyna",
+   "tags": [
+    "iklim degisikligi",
+    "kavram kaymasi",
+    "gelecek",
+    "model"
+   ]
+  },
+  {
+   "id": "S22",
+   "q": "Neden blokzincir? Normal bir veritabanı yetmez mi?",
+   "a": "Tek bir kurumun veritabanında o kurum kaydı değiştirebilir, diğerleri ona güvenmek zorunda kalır. Bizim sorunumuz çok taraflı güven: çiftçi, sigortacı, devlet ve reasürör aynı kurallara ve aynı kanıtlara bakmalı ve kimse sonradan değiştirememeli. Blokzinciri parayı taşımak için değil, kuralı ve kanıtı korumak için kullanıyoruz.",
+   "owner": "Yakup",
+   "tags": [
+    "blokzincir",
+    "neden",
+    "veritabani",
+    "guven",
+    "zincir",
+    "polygon"
+   ],
+   "sources": [
+    {
+     "title": "Örnek kanıt sayfası (7F3A)",
+     "url": "/k/7F3A"
+    }
+   ]
+  },
+  {
+   "id": "S23",
+   "q": "Kripto ile mi ödeme yapacaksınız? Türkiye'de bu yasal mı?",
+   "a": "Hayır, kripto ile ödeme yapmıyoruz. TCMB'nin 2021 yönetmeliği ödemelerde kripto kullanımını yasaklıyor, çiftçinin cüzdanı da yok. Sözleşme ödemeyi onaylıyor, para lisanslı bir banka ya da ödeme kuruluşu üzerinden FAST ile TL olarak IBAN'a gidiyor. Gelecekte Dijital TL'nin programlanabilir ödeme altyapısına bağlanabiliriz.",
+   "owner": "Yakup",
+   "tags": [
+    "kripto",
+    "odeme",
+    "yasal",
+    "fast",
+    "iban",
+    "tl",
+    "cuzdan"
+   ],
+   "sources": [
+    {
+     "title": "Ödemelerde Kripto Varlıkların Kullanılmamasına Dair Yönetmelik (RG 16.04.2021)",
+     "url": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=38569&MevzuatTur=7&MevzuatTertip=5"
+    }
+   ]
+  },
+  {
+   "id": "S24",
+   "q": "Oracle manipüle edilirse?",
+   "a": "Üç katman var. Her tanığın verisi birden fazla bağımsız düğümden gelir ve medyanı alınır; bir düğüm yalan söylese sonuç değişmez. Üç tanıktan ikisinin anlaşması gerekir. Parsel ve gün başına ödeme tavanı ile devre kesici var; anormal bir ödeme dalgasında sistem kendini durdurur. Demoda oracle rolünü imzalı servisimiz yapıyor; üretimde Chainlink gibi çok düğümlü bir ağ öngörüyoruz.",
+   "owner": "Yakup",
+   "tags": [
+    "oracle",
+    "manipulasyon",
+    "chainlink",
+    "medyan",
+    "devre kesici"
+   ]
+  },
+  {
+   "id": "S25",
+   "q": "Akıllı sözleşmede hata çıkarsa?",
+   "a": "Canlıya çıkmadan önce bağımsız güvenlik denetimi yapılır. Hata görülürse devre kesici sistemi durdurur. Düzeltme proxy ile yapılır, ama timelock süresi boyunca herkesin gözü önünde ve çoklu onayla; tek kişi keyfi değişiklik yapamaz.",
+   "owner": "Yakup",
+   "tags": [
+    "akilli sozlesme",
+    "hata",
+    "bug",
+    "denetim",
+    "proxy",
+    "timelock"
+   ]
+  },
+  {
+   "id": "S26",
+   "q": "Gas ücretini kim ödüyor? Polygon'a bir şey olursa?",
+   "a": "Gas ücretini platform ödüyor, işlem başı kuruşlar mertebesinde. Günün kayıtlarını tek bir Merkle kökü olarak yazarsak günde tek işlem yeter. Sözleşme EVM standardında; izinli bir konsorsiyum ağına ya da başka bir EVM ağına taşınabilir.",
+   "owner": "Yakup",
+   "tags": [
+    "gas",
+    "ucret",
+    "polygon",
+    "tps",
+    "merkle",
+    "hiz"
+   ]
+  },
+  {
+   "id": "S27",
+   "q": "Kişisel veriler blokzincirde mi? KVKK?",
+   "a": "Hayır. Ad, TC kimlik, IBAN ve telefon asla zincire yazılmıyor. Zincirde sadece takma adlı parsel kimliği (P-1182 gibi) ve ölçüm/karar parmak izleri var. Kişiyle eşleştirme sigortacının güvenli sisteminde tutuluyor.",
+   "owner": "Yakup",
+   "tags": [
+    "kvkk",
+    "kisisel veri",
+    "gizlilik",
+    "zincir",
+    "iban"
+   ],
+   "sources": [
+    {
+     "title": "Örnek kanıt sayfası (7F3A)",
+     "url": "/k/7F3A"
+    }
+   ]
+  },
+  {
+   "id": "S28",
+   "q": "Bu iş için hangi izinler gerekiyor?",
+   "a": "Sigorta ürününü biz değil, havuz ve sigorta şirketleri sunuyor (5363 sayılı Kanun, SEDDK denetimi); biz teknoloji sağlayıcıyız. Ödeme, 6493 sayılı Kanun kapsamındaki lisanslı banka ya da ödeme kuruluşu üzerinden yapılıyor. Kişisel veride KVKK'ya uyuyoruz. Tam otomatik parametrik ödeme için düzenleyiciyle pilot görüşmesi gerekecek; bu yüzden onu üçüncü faza koyduk.",
+   "owner": "Bedirhan",
+   "tags": [
+    "izin",
+    "regulasyon",
+    "lisans",
+    "seddk",
+    "5363",
+    "6493",
+    "mevzuat"
+   ]
+  },
+  {
+   "id": "S29",
+   "q": "Dijital TL ile ne ilişkiniz var?",
+   "a": "TCMB'nin ekosistem çağrısında en kalabalık kategori 'programlanabilir ödemeler'. AgriShield'ın ihtiyacı da tam bu: koşul gerçekleşince kendiliğinden ödeyen para. Bugün FAST kullanıyoruz; Dijital TL yaygınlaştığında ödeme servisimiz doğrudan ona bağlanabilir.",
+   "owner": "Yakup",
+   "tags": [
+    "dijital tl",
+    "tcmb",
+    "programlanabilir odeme",
+    "gelecek"
+   ],
+   "sources": [
+    {
+     "title": "Alomaliye (03.08.2026) — Dijital TL'de 23 proje 3. aşamada",
+     "url": "https://www.alomaliye.com/2026/08/03/dijital-turk-lirasinda-23-proje-ucuncu-asamada/"
+    }
+   ]
+  },
+  {
+   "id": "S30",
+   "q": "Bu projeyi 1 yıl sonra nerede görüyorsunuz?",
+   "a": "Şanlıurfa'da bir sezonluk gölge mod pilotu tamamlamış, basis riskini sahada ölçmüş, bir havuz şirketiyle hasar ön tespiti hizmetine başlamış ve 3–5 kooperatife istasyon kurmuş olmayı hedefliyoruz.",
+   "owner": "Bedirhan",
+   "tags": [
+    "gelecek",
+    "1 yil",
+    "hedef",
+    "yol haritasi",
+    "vizyon"
+   ]
+  },
+  {
+   "id": "S31",
+   "q": "Takımda sigorta ya da aktüerya bilen var mı?",
+   "a": "Takımımızda aktüer yok; bunu biliyoruz. Prim hesabının mantığını öğrendik (beklenen hasar + pay), danışmanımızdan destek alıyoruz ve pilotta sigorta şirketinin aktüerya ekibiyle çalışmayı planlıyoruz.",
+   "owner": "Bedirhan",
+   "tags": [
+    "takim",
+    "akturya",
+    "sigorta bilgisi",
+    "ekip"
+   ]
+  },
+  {
+   "id": "S32",
+   "q": "Bu proje daha önce başka bir yarışmaya katıldı mı?",
+   "a": "Bu sorunun doğrulanmış cevabı asistanda yok; takım kaptanı cevaplar (şartname gereği varsa bilgiler proje dosyasında bildirilmiştir).",
+   "owner": "Takım kaptanı",
+   "tags": [
+    "yarisma",
+    "katilim",
+    "daha once",
+    "sartname"
+   ]
+  },
+  {
+   "id": "D1",
+   "q": "Demodaki veri gerçek mi?",
+   "a": "Karşınızdaki zaman makinesi senaryoları örnek veridir (sentetik, 'örnek veri' rozetiyle işaretli) — sahnede hiçbir şeyin bozulmaması için deterministik üretildi. Gerçek olanlar: meteoroloji tanığının 30 yıllık normali ve SPI hesabı (ERA5 1991–2020), Siverek için 35 sezonluk geriye dönük test, karar motoru ve kanıt hash'i. Ödeme, SMS ve (test ağı dışında) zincir adımları simülasyondur.",
+   "owner": "Aleyna",
+   "tags": [
+    "gercek",
+    "veri",
+    "sentetik",
+    "simulasyon",
+    "ornek veri",
+    "demo"
+   ],
+   "sources": [
+    {
+     "title": "ERA5 / Open-Meteo arşiv API'si",
+     "url": "https://open-meteo.com/en/docs/historical-weather-api"
+    }
+   ]
+  },
+  {
+   "id": "D2",
+   "q": "Hasadı kuraklık sanmaz mı? NDVI hasatta da düşer.",
+   "a": "Sanmaz. Karar motoru ürünün gelişim takvimini (fenoloji) bilir: kıraç buğdayda 20 Mayıs–30 Haziran olgunlaşma–hasat penceresinde uydu tanığı daima HAYIR döner. Ayrıca eşik döneme göre ölçeklenir: efektif eşik = −0,25 / ağırlık; kritik başaklanma döneminde ağırlık 1,0.",
+   "owner": "Aleyna",
+   "tags": [
+    "hasat",
+    "fenoloji",
+    "ndvi dususu",
+    "pencere",
+    "donem"
+   ]
+  },
+  {
+   "id": "D3",
+   "q": "Aynı %15 nem her toprakta aynı mı?",
+   "a": "Hayır. Aynı %15 nem kumlu toprakta iyi, killi toprakta kuraklıktır. Solma noktası killi toprakta %18, tınlı toprakta %14, kumlu toprakta %9 (hacimsel); istasyon tanığı eşiği parselin toprak tipine göre seçer.",
+   "owner": "Ferhat",
+   "tags": [
+    "toprak",
+    "nem",
+    "solma noktasi",
+    "killi",
+    "kumlu",
+    "tinli",
+    "esik"
+   ]
+  },
+  {
+   "id": "D4",
+   "q": "Bir kararın doğru olduğunu nasıl kontrol ederim?",
+   "a": "Her kararın herkese açık bir kanıt sayfası var (örnek: /k/7F3A). Sayfadaki mühürlenen metni kopyalayıp SHA-256'sını alırsanız sonuç evidenceHash ile aynı çıkar; tek bir rakamı değiştirirseniz hash değişir. Aynı hash zincirdeki kayıtta da durur.",
+   "owner": "Yakup",
+   "tags": [
+    "dogrulama",
+    "hash",
+    "kanit",
+    "sha256",
+    "kontrol",
+    "seffaflik"
+   ],
+   "sources": [
+    {
+     "title": "Örnek kanıt sayfası (7F3A)",
+     "url": "/k/7F3A"
+    }
+   ]
+  },
+  {
+   "id": "D5",
+   "q": "Sulu parsele de kuraklık ödemesi yapar mısınız?",
+   "a": "Köy istasyonu kıraç arazide durduğu için sulanan parselin kök bölgesi nemini temsil etmez; sulu poliçelerde istasyon tanığı kullanılmaz ve karar uydu + meteoroloji ile verilir. Böylece yağış açığı olan ama sulandığı için sağlıklı bir parsel ödeme almaz.",
+   "owner": "Ferhat",
+   "tags": [
+    "sulu",
+    "sulama",
+    "istasyon",
+    "parsel",
+    "odeme"
+   ]
+  },
+  {
+   "id": "D6",
+   "q": "Yapay zekâ tanık mı?",
+   "a": "Hayır. Yapay zekâ tanık değil, hakem: eşiği ürüne ve döneme göre ayarlar, primi hesaplar, çiftçiyi önceden uyarır, şüpheli veriyi işaretler. Tahmine para ödenmez; ödeme üç bağımsız ölçümün oylamasına bağlıdır.",
+   "owner": "Aleyna",
+   "tags": [
+    "yapay zeka",
+    "tanik",
+    "hakem",
+    "rol",
+    "tahmin"
+   ]
+  }
+ ],
+ "facts": [
+  {
+   "id": "F:tarsimBitkiselPrim2024",
+   "claim": "Bitkisel ürün primi (2024)",
+   "value": "₺15,02 milyar",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:tarsimToplamPrim2024",
+   "claim": "Toplam prim, tüm branşlar (2024)",
+   "value": "₺27,23 milyar",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:tarsimBitkiselPolice2024",
+   "claim": "Bitkisel ürün poliçesi (2024)",
+   "value": "2.697.381 poliçe",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:tarsimTazminat2024",
+   "claim": "Bitkisel tazminat (2024, +%30,9)",
+   "value": "₺6,64 milyar",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:hasarIhbari2024",
+   "claim": "Hasar ihbarı (2024) — her birine eksper gitmeli",
+   "value": "471.000 ihbar",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:doluPayi2024",
+   "claim": "Bitkisel hasarların dolu payı (2024)",
+   "value": "%54,6",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:sigortaliUretici2024",
+   "claim": "Sigortalı üretici/işletme (2024)",
+   "value": "866.000 üretici/işletme",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:sigortaliAlan2024",
+   "claim": "Sigortalı alan (2024)",
+   "value": "35,6 milyon dekar",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:sigortaliAlanOrani",
+   "claim": "İşlenen tarım alanının sigortalı payı (≈ her 7 dekardan 1'i)",
+   "value": "≈%15",
+   "kind": "hesap",
+   "derivation": "35,6 milyon dekar sigortalı alan (TARSİM 2024) ÷ ~240 milyon dekar işlenen tarım alanı (TÜİK/TÜRKTOB 2024) ≈ %15",
+   "source": "Tarım ve orman alanları 1988–2024 (TÜİK verisi)",
+   "url": "https://www.turktob.org.tr/fs_/VERILER/BITKISEL_URETIM_VERILERI-URETIM_VERILERI_2024/8-TARIM_VE_ORMAN_ALANLARI_2024.pdf"
+  },
+  {
+   "id": "F:ciftciSayisiCKS",
+   "claim": "ÇKS'ye kayıtlı çiftçi",
+   "value": "2,25 milyon",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "ÇKS'ye kayıtlı çiftçi sayısı 2 milyon 245 bin 526",
+   "url": "https://www.milliyet.com.tr/gundem/bakan-yumakli-cksye-kayitli-ciftci-sayisi-2-milyon-245-bin-526ya-yukseldi-7034223"
+  },
+  {
+   "id": "F:koyBazliOdemeSuresi",
+   "claim": "Köy verimi açıklandıktan sonra ödeme (en geç)",
+   "value": "≤30 gün",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Köy Bazlı Verim Sigortası",
+   "url": "https://www.tarsim.gov.tr/subPage/koy-bazli-verim-sigortasi"
+  },
+  {
+   "id": "F:koyBazliUrunSayisi",
+   "claim": "Köy bazlı kuraklık verim sigortasındaki kuru tarım ürünü",
+   "value": "9 ürün",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Köy Bazlı Verim Sigortası",
+   "url": "https://www.tarsim.gov.tr/subPage/koy-bazli-verim-sigortasi"
+  },
+  {
+   "id": "F:koyBazliDestek",
+   "claim": "Köy bazlı üründe devlet prim desteği",
+   "value": "%70",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Tarım Sigortaları Havuzu tarafından 2026 yılında kapsama alınacak riskler ve ürünler",
+   "url": "https://www.alomaliye.com/2026/01/01/tarim-sigortalari-havuzu-tarafindan-2026-yilinda-kapsama-alinacak-riskler-urunler/"
+  },
+  {
+   "id": "F:tekirdagPilotKatilim",
+   "claim": "Tekirdağ parsel bazlı pilotta sigortalılık (2026)",
+   "value": "%80+",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Yeni nesil tarım sigortasında sigortalılık %80'in üzerine çıktı",
+   "url": "https://www.sabah.com.tr/tekirdag/2026/08/24/tekirdagda-yeni-nesli-tarim-sigortasinda-sigortalilik-orani-yuzde-80in-uzerine-cikti"
+  },
+  {
+   "id": "F:parametrikPazar2031",
+   "claim": "Global parametrik sigorta pazarı (2031 tahmini)",
+   "value": "$29,3 milyar",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Parametric Insurance Market to Reach $29.3 Bn by 2031",
+   "url": "https://www.prnewswire.com/news-releases/parametric-insurance-market-to-reach-29-3-bn-globally-by-2031-at-9-9-cagr-allied-market-research-301573879.html"
+  },
+  {
+   "id": "F:dijitalTLUcuncuAsama",
+   "claim": "Dijital TL 3. aşamadaki proje (Ağu 2026)",
+   "value": "23 proje",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Dijital Türk Lirasında 23 proje üçüncü aşamada",
+   "url": "https://www.alomaliye.com/2026/08/03/dijital-turk-lirasinda-23-proje-ucuncu-asamada/"
+  },
+  {
+   "id": "F:dijitalTLBasvuru",
+   "claim": "Dijital TL ekosistem çağrısına başvuru",
+   "value": "85 başvuru",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Dijital Türk Lirasında 23 proje üçüncü aşamada",
+   "url": "https://www.alomaliye.com/2026/08/03/dijital-turk-lirasinda-23-proje-ucuncu-asamada/"
+  },
+  {
+   "id": "F:dijitalTLProgramlanabilir",
+   "claim": "3. aşamada programlanabilir ödeme projesi",
+   "value": "17 proje",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Dijital Türk Lirasında 23 proje üçüncü aşamada",
+   "url": "https://www.alomaliye.com/2026/08/03/dijital-turk-lirasinda-23-proje-ucuncu-asamada/"
+  },
+  {
+   "id": "F:sanliurfaKayip2025",
+   "claim": "Şanlıurfa kuru tarımda kayıp (Mayıs 2025, TZOB)",
+   "value": "%100'e varan",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Şanlıurfa'da tarım felaketi: kuraklık üretimi vurdu (TZOB açıklaması)",
+   "url": "https://www.sanliurfagazetesi.com/sanliurfada-tarim-felaketi-kuraklik-uretimi-vurdu"
+  },
+  {
+   "id": "F:sentinel2Cozunurluk",
+   "claim": "Sentinel-2 çözünürlük",
+   "value": "10 m",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Copernicus Data Space Ecosystem (Sentinel-1/2)",
+   "url": "https://dataspace.copernicus.eu/"
+  },
+  {
+   "id": "F:sentinel2Gecis",
+   "claim": "Sentinel-2 geçiş sıklığı",
+   "value": "~5 gün",
+   "kind": "resmi",
+   "derivation": null,
+   "source": "Copernicus Data Space Ecosystem (Sentinel-1/2)",
+   "url": "https://dataspace.copernicus.eu/"
+  },
+  {
+   "id": "F:ortalamaBitkiselPrim",
+   "claim": "Ortalama bitkisel poliçe primi (2024)",
+   "value": "≈₺5.570",
+   "kind": "hesap",
+   "derivation": "₺15,02 milyar bitkisel prim ÷ 2.697.381 bitkisel poliçe ≈ ₺5.570",
+   "source": "TARSİM 2024 Faaliyet Raporu",
+   "url": "https://www.tarsim.gov.tr/staticweb/krm-web/dergi/faaliyet-raporlari/2024.pdf"
+  },
+  {
+   "id": "F:izlemeUcreti",
+   "claim": "Parsel başı sezonluk izleme ücreti (örnek)",
+   "value": "₺50",
+   "kind": "varsayim",
+   "derivation": "Ortalama bitkisel primin ~%1'i; takım varsayımı, pilotta netleşecek.",
+   "source": "AlgoVest hesaplaması / varsayımı",
+   "url": "/durum#hesaplar"
+  },
+  {
+   "id": "F:samYillik",
+   "claim": "SAM: tüm bitkisel poliçelere parsel izleme (yıllık)",
+   "value": "~₺135 milyon/yıl",
+   "kind": "hesap",
+   "derivation": "2,70 milyon bitkisel poliçe × ₺50 izleme ücreti ≈ ₺135 milyon/yıl (veri/API gelirleri hariç)",
+   "source": "AlgoVest hesaplaması / varsayımı",
+   "url": "/durum#hesaplar"
+  },
+  {
+   "id": "F:somAlt",
+   "claim": "SOM alt sınır (ilk 3 yıl, poliçelerin %2'si)",
+   "value": "~₺2,7 milyon/yıl",
+   "kind": "hesap",
+   "derivation": "54 bin poliçe (%2) × ₺50 ≈ ₺2,7 milyon/yıl",
+   "source": "AlgoVest hesaplaması / varsayımı",
+   "url": "/durum#hesaplar"
+  },
+  {
+   "id": "F:somUst",
+   "claim": "SOM üst sınır (ilk 3 yıl, poliçelerin %5'i)",
+   "value": "~₺6,8 milyon/yıl",
+   "kind": "hesap",
+   "derivation": "135 bin poliçe (%5) × ₺50 ≈ ₺6,8 milyon/yıl",
+   "source": "AlgoVest hesaplaması / varsayımı",
+   "url": "/durum#hesaplar"
+  },
+  {
+   "id": "F:istasyonParselBasi",
+   "claim": "Köy istasyonu + gateway payı, parsel başı donanım (150 parsellik köy)",
+   "value": "~$8",
+   "kind": "varsayim",
+   "derivation": "1 istasyon ~$500–1.000 + gateway payı ~$100–200 ≈ $1.200 ÷ 150 parsel ≈ $8 (yaklaşık; gerçek teklif alınacak)",
+   "source": "AlgoVest hesaplaması / varsayımı",
+   "url": "/durum#hesaplar"
+  },
+  {
+   "id": "F:tarlaBasiSensor",
+   "claim": "Tarla başı sensör paketi, parsel başı (eski model)",
+   "value": "~$100",
+   "kind": "varsayim",
+   "derivation": "Hobi parçalarıyla bile ~$80–150; saha dayanıklılığında daha fazla (yaklaşık)",
+   "source": "AlgoVest hesaplaması / varsayımı",
+   "url": "/durum#hesaplar"
+  },
+  {
+   "id": "F:zincirIhtiyacTps",
+   "claim": "1 milyon poliçe × günde 1 kayıt için gereken işlem hızı",
+   "value": "~12 işlem/sn",
+   "kind": "hesap",
+   "derivation": "1.000.000 kayıt ÷ 86.400 sn ≈ 11,6 işlem/sn; Merkle köküyle günde 1 işlem yeterli",
+   "source": "AlgoVest hesaplaması / varsayımı",
+   "url": "/durum#hesaplar"
+  },
+  {
+   "id": "F:era5Sezon2025Yagis",
+   "claim": "Siverek 2024–25 sezonu yağışı (Kas–Haz, ERA5)",
+   "value": "390 mm",
+   "kind": "hesap",
+   "derivation": "ERA5 günlük yağış, 1 Kas 2024 – 30 Haz 2025 toplamı, 37,75°K 39,32°D",
+   "source": "ERA5 / ERA5-Land yeniden analiz verisi (Open-Meteo arşiv API'si ile)",
+   "url": "https://open-meteo.com/en/docs/historical-weather-api"
+  },
+  {
+   "id": "F:era5SezonNormal",
+   "claim": "Siverek 30 sezon ortalaması (Kas–Haz, 1991/92–2020/21, ERA5)",
+   "value": "545 mm",
+   "kind": "hesap",
+   "derivation": "1991/92–2020/21 arası 30 sezonun Kas–Haz yağış toplamlarının ortalaması",
+   "source": "ERA5 / ERA5-Land yeniden analiz verisi (Open-Meteo arşiv API'si ile)",
+   "url": "https://open-meteo.com/en/docs/historical-weather-api"
+  },
+  {
+   "id": "F:era5Sezon2025Acik",
+   "claim": "2024–25 sezonunda normale göre yağış açığı (ERA5)",
+   "value": "%28",
+   "kind": "hesap",
+   "derivation": "1 − 390 / 545 ≈ %28",
+   "source": "ERA5 / ERA5-Land yeniden analiz verisi (Open-Meteo arşiv API'si ile)",
+   "url": "https://open-meteo.com/en/docs/historical-weather-api"
+  },
+  {
+   "id": "F:era5KurakSira",
+   "claim": "2024–25, son 35 sezonun en kurak 5 sezonundan biri (ERA5)",
+   "value": "5 / 35",
+   "kind": "hesap",
+   "derivation": "35 sezonun Kas–Haz toplamları küçükten büyüğe sıralandığında 2024–25 beşinci (2013–14 ile eşit)",
+   "source": "ERA5 / ERA5-Land yeniden analiz verisi (Open-Meteo arşiv API'si ile)",
+   "url": "https://open-meteo.com/en/docs/historical-weather-api"
+  },
+  {
+   "id": "F:backtestTetikSezon",
+   "claim": "Geriye dönük testte iki yağış tanığının birlikte tetiklendiği sezon (ERA5, 35 sezon)",
+   "value": "7 / 35 sezon",
+   "kind": "hesap",
+   "derivation": "Kritik dönemde (1 Nis–20 May) aynı gün hem meteoroloji tanığı (SPI-30 ≤ −1,5 veya yağış < %40 normal) hem 30 günlük yağış ≤ 10 mm. Tetiklenen: 1992, 1999, 2004, 2008, 2016, 2021, 2022. Uydu ve toprak nemi dahil değil → üst yaklaşım. (scripts/backtest.ts)",
+   "source": "ERA5 / ERA5-Land yeniden analiz verisi (Open-Meteo arşiv API'si ile)",
+   "url": "https://open-meteo.com/en/docs/historical-weather-api"
+  },
+  {
+   "id": "F:backtestTetikOlasiligi",
+   "claim": "Tetik olasılığı — yağışa dayalı üst yaklaşım (ERA5 backtest)",
+   "value": "≤%20",
+   "kind": "hesap",
+   "derivation": "7 / 35 sezon = %20. Uydu ve istasyon toprak nemi koşulu eklendiğinde oran düşer; pilotta gerçek verimle doğrulanacak.",
+   "source": "ERA5 / ERA5-Land yeniden analiz verisi (Open-Meteo arşiv API'si ile)",
+   "url": "https://open-meteo.com/en/docs/historical-weather-api"
+  }
+ ],
+ "glossary": [
+  {
+   "term": "Parametrik sigorta",
+   "oneLiner": "Zararı değil sebebini (endeksi) ölçüp eşik aşılınca otomatik ödeyen sigorta.",
+   "analogy": "Uçak rötar sigortası: uçuş 3 saatten fazla gecikirse para yatar, kimse 'zarar gördün mü?' diye sormaz."
+  },
+  {
+   "term": "Basis risk",
+   "oneLiner": "Ölçülen endeks ile çiftçinin gerçek zararı arasındaki fark.",
+   "analogy": "İstasyona yağmur yağmış ama 3 km ötedeki tarlaya hiç yağmamış olabilir.",
+   "tags": [
+    "baz riski"
+   ]
+  },
+  {
+   "term": "NDVI",
+   "oneLiner": "Bitkinin uydudan ölçülen yeşillik notu: (NIR − Kırmızı) / (NIR + Kırmızı); sağlıklı bitkide ~0,6–0,9.",
+   "analogy": "Bitkinin yeşillik karnesi.",
+   "tags": [
+    "ndvi",
+    "yesillik",
+    "uydu"
+   ]
+  },
+  {
+   "term": "NDMI",
+   "oneLiner": "Bitki su içeriği indeksi (NIR ve SWIR ile); bitki sararmadan önce su kaybını yakalar.",
+   "analogy": "Bitkinin susuzluk ölçeri.",
+   "tags": [
+    "ndwi"
+   ]
+  },
+  {
+   "term": "SPI",
+   "oneLiner": "Standart Yağış İndeksi: bu dönemin yağışı uzun yıllar ortalamasından kaç standart sapma uzakta? −1,5 altı çok kurak, −2 altı aşırı kurak.",
+   "tags": [
+    "spi",
+    "kuraklik indisi"
+   ]
+  },
+  {
+   "term": "Sentinel-2",
+   "oneLiner": "Copernicus'un optik uydusu: 10 m çözünürlük, ~5 günde bir geçiş, veri ücretsiz.",
+   "analogy": "Her 5 günde bir tarlanın fotoğrafını çeken bedava fotoğrafçı.",
+   "tags": [
+    "uydu"
+   ]
+  },
+  {
+   "term": "Sentinel-1",
+   "oneLiner": "Kendi sinyalini gönderip yankısını ölçen radar uydusu; bulut ve gece etkilemez, NDVI veremez.",
+   "analogy": "Yarasa gibi — ışığa değil yankıya bakar.",
+   "tags": [
+    "radar",
+    "sar"
+   ]
+  },
+  {
+   "term": "LST",
+   "oneLiner": "Yer yüzeyi sıcaklığı; termal bantlı uydulardan (Landsat 8/9, MODIS, Sentinel-3) gelir, Sentinel-2'den gelmez."
+  },
+  {
+   "term": "LoRa / LoRaWAN",
+   "oneLiner": "Küçük paketleri kilometrelerce uzağa çok az enerjiyle taşıyan telsiz / onun ağ kuralları.",
+   "analogy": "Köy meydanındaki hoparlör: uzağa ulaşır ama kısa anons içindir.",
+   "tags": [
+    "lora"
+   ]
+  },
+  {
+   "term": "Gateway",
+   "oneLiner": "LoRa mesajlarını toplayıp internete aktaran kutu.",
+   "analogy": "Köyün postanesi."
+  },
+  {
+   "term": "Oracle",
+   "oneLiner": "Dış dünya verisini blokzincire taşıyan köprü.",
+   "analogy": "Maçtaki VAR: sahayı kendi görmeyen hakeme görüntüyü getirir.",
+   "tags": [
+    "chainlink"
+   ]
+  },
+  {
+   "term": "Akıllı sözleşme",
+   "oneLiner": "Blokzincirde çalışan, koşul gerçekleşince kendiliğinden işleyen program.",
+   "analogy": "Kasiyersiz içecek otomatı.",
+   "tags": [
+    "smart contract",
+    "solidity"
+   ]
+  },
+  {
+   "term": "Blokzincir",
+   "oneLiner": "Kopyası çok yerde tutulan, mühürlü sayfalardan oluşan, değiştirilemez kayıt defteri.",
+   "analogy": "1.000 kopyası olan noter defteri.",
+   "tags": [
+    "zincir"
+   ]
+  },
+  {
+   "term": "Multi-sig",
+   "oneLiner": "Bir işlem için birden çok imza isteyen cüzdan yapısı. Bizim kuralımızın doğru adı 'üç tanıktan ikisi' (2/3 eşik onayı)."
+  },
+  {
+   "term": "Devre kesici",
+   "oneLiner": "Anormal durumda (ör. bir günde beklenenin çok üstünde ödeme talebi) sistemi otomatik durduran güvenlik önlemi.",
+   "analogy": "Evdeki sigorta kutusu."
+  },
+  {
+   "term": "Gölge mod",
+   "oneLiner": "Sistemin bir sezon gerçek ödeme yapmadan 'öderdim/ödemezdim' kararını kaydettiği test dönemi; sonunda gerçek verimle karşılaştırılır."
+  },
+  {
+   "term": "FAST",
+   "oneLiner": "TCMB'nin 7/24 çalışan anlık ödeme sistemi; para saniyeler içinde karşı hesaba geçer."
+  },
+  {
+   "term": "Dijital Türk Lirası",
+   "oneLiner": "TCMB'nin dijital parası; programlanabilir ödemeye imkân verir.",
+   "tags": [
+    "dijital tl"
+   ]
+  },
+  {
+   "term": "Fenoloji",
+   "oneLiner": "Bitkinin gelişim takvimi (çıkış, kardeşlenme, başaklanma, olgunluk)."
+  },
+  {
+   "term": "SHAP",
+   "oneLiner": "Model kararını faktörlerine ayıran açıklama yöntemi.",
+   "analogy": "Elektrik faturasının dökümü."
+  },
+  {
+   "term": "Eksper",
+   "oneLiner": "Hasarı yerinde tespit eden uzman.",
+   "tags": [
+    "hasar tespit"
+   ]
+  },
+  {
+   "term": "TARSİM",
+   "oneLiner": "Tarım Sigortaları Havuzu (5363 sayılı Kanun); devlet destekli tarım sigortası bu havuz üzerinden yürür."
+  },
+  {
+   "term": "ERA5 / ERA5-Land",
+   "oneLiner": "Copernicus'un saatlik iklim yeniden analiz verisi (~9 km, 1950'den beri); meteoroloji normalimiz buradan."
+  },
+  {
+   "term": "Hash",
+   "oneLiner": "Verinin benzersiz kısa özeti (parmak izi). Veri değişirse hash de değişir.",
+   "tags": [
+    "mühür",
+    "parmak izi",
+    "sha256"
+   ]
+  }
+ ],
+ "rules": [
+  {
+   "id": "R:oylama",
+   "title": "Üç tanık ve oylama kuralı",
+   "text": "Tanıklar: uydu (parsel), yer istasyonu (köy), resmi meteoroloji (bölge). ≥2 EVET → ÖDE (bedel × ödeme oranı); 1 EVET → GRİ BÖLGE (eksper incelemesi, çiftçiye bilgi SMS'i); 0 EVET → ÖDEME YOK (itiraz hakkı korunur)."
+  },
+  {
+   "id": "R:uydu",
+   "title": "Uydu tanığı",
+   "text": "NDVI anomalisi = (güncel − normal ortanca) / normal ortanca. EVET: anomali ≤ -0.25 / fenoloji ağırlığı, bulutluluk < 0.4. 15 gündür bulutsuz geçiş yoksa Sentinel-1 radar yedeği (yüzey nemi z ≤ -1 → EVET). Hasat penceresinde uydu tanığı daima HAYIR."
+  },
+  {
+   "id": "R:istasyon",
+   "title": "Yer istasyonu tanığı",
+   "text": "EVET: 30 günlük yağış ≤ 10 mm VE kök bölgesi nemi solma noktasının altında (killi %18, tınlı %14, kumlu %9). Şüpheli veri (yağışsız 1 saatte >8 puan nem artışı, kurcalama, 3σ çapraz tutarsızlık, sıra/imza hatası) varsa VERİ YOK. Sulu parsellerde istasyon tanığı kullanılmaz."
+  },
+  {
+   "id": "R:meteoroloji",
+   "title": "Meteoroloji tanığı",
+   "text": "EVET: SPI-30 ≤ -1.5 VEYA 30 günlük yağış uzun yıllar ortalamasının %40'ının altında (normal ≥ 15 mm olduğunda). Normal ve SPI parametreleri gerçek ERA5 1991–2020 Siverek verisinden."
+  },
+  {
+   "id": "R:emniyet",
+   "title": "Ek emniyetler",
+   "text": "Ödeme tavanı: poliçe başına sezonda 1 tetik. Karantina: aynı parsel 7 gün içinde ikinci karar alamaz. Devre kesici: köy başına günde en fazla N ödeme, manuel durdurma. İtiraz penceresi: karar sonrası 60 sn (sahnede 5 sn), operatör durdurabilir."
+  },
+  {
+   "id": "R:fenoloji:bugday",
+   "title": "Fenoloji penceresi — Buğday",
+   "text": "Çıkış–kardeşlenme 15 Kas–14 Şub ağırlık 0,4; Sapa kalkma 15 Şub–31 Mar ağırlık 0,8; Başaklanma–tane dolumu 1 Nis–20 May ağırlık 1; Olgunlaşma–hasat 21 May–30 Haz ağırlık 0,2 (tetik kapalı). Efektif NDVI eşiği = -0.25 / ağırlık."
+  },
+  {
+   "id": "R:fenoloji:kirmizi_mercimek",
+   "title": "Fenoloji penceresi — Kırmızı mercimek",
+   "text": "Çıkış–kardeşlenme 5 Kas–4 Şub ağırlık 0,4; Sapa kalkma 5 Şub–21 Mar ağırlık 0,8; Başaklanma–tane dolumu 22 Mar–10 May ağırlık 1; Olgunlaşma–hasat 11 May–20 Haz ağırlık 0,2 (tetik kapalı). Efektif NDVI eşiği = -0.25 / ağırlık."
+  },
+  {
+   "id": "R:fenoloji:arpa",
+   "title": "Fenoloji penceresi — Arpa",
+   "text": "Çıkış–kardeşlenme 8 Kas–7 Şub ağırlık 0,4; Sapa kalkma 8 Şub–24 Mar ağırlık 0,8; Başaklanma–tane dolumu 25 Mar–13 May ağırlık 1; Olgunlaşma–hasat 14 May–23 Haz ağırlık 0,2 (tetik kapalı). Efektif NDVI eşiği = -0.25 / ağırlık."
+  },
+  {
+   "id": "R:backtest",
+   "title": "Geriye dönük test (gerçek ERA5, Siverek)",
+   "text": "35 sezonda (1991/92–2025/26) kritik dönemde meteoroloji tanığı ve 30 günlük yağış ≤ 10 mm aynı gün 7 sezonda birlikte gerçekleşti (1991-1992, 1998-1999, 2003-2004, 2007-2008, 2015-2016, 2020-2021, 2021-2022). Uydu ve toprak nemi dahil değil; üst yaklaşım."
+  }
+ ]
+}

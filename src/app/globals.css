@@ -1,0 +1,306 @@
+@import "tailwindcss";
+
+/* ───────────────────────────── AgriShield tasarım tokenları ─────────────────────────────
+   "Toprak + uydu": sıcak toprak tonları üzerinde ölçüm aleti hassasiyeti.
+   Anlam sabittir: yeşil = doğrulandı, sarı = belirsiz/gri bölge, kırmızı = kuraklık/ret,
+   mavi = uydu, mor = yapay zekâ, kahve = yer istasyonu, gri-yeşil = blokzincir.            */
+
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e1a14;
+  --surface: #142218;
+  --surface-2: #1b2c21;
+  --line: #2a3c31;
+  --line-strong: #3a5042;
+  --text: #f2f7f3;
+  --text-dim: #a9bcaf;
+
+  --green: #2f9e6b;
+  --green-dim: #1d5a43;
+  --wheat: #e0a526;
+  --wheat-dim: #8a5d06;
+  --sky: #4aa3e8;
+  --violet: #8b7bd8;
+  --soil: #b07c4f;
+  --red: #e05a47;
+  --chain: #c9d6ce;
+
+  /* metin olarak kullanılacak (kontrast güvenli) vurgu tonları */
+  --green-fg: #4cc28b;
+  --wheat-fg: #efbb4a;
+  --sky-fg: #6cb6ee;
+  --violet-fg: #a99df0;
+  --soil-fg: #cf9a6c;
+  --red-fg: #f07a68;
+  --chain-fg: #c9d6ce;
+
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -18px rgb(0 0 0 / 0.6);
+  --grid-line: rgb(169 188 175 / 0.06);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #fbf8f1;
+  --surface: #ffffff;
+  --surface-2: #f4efe3;
+  --line: #e5ddcb;
+  --line-strong: #cfc3a8;
+  --text: #16211b;
+  --text-dim: #4f5e54;
+
+  /* vurgu renkleri aynı, %15 koyultulmuş */
+  --green: #288659;
+  --green-dim: #cfe8da;
+  --wheat: #be8c20;
+  --wheat-dim: #f3e2b6;
+  --sky: #3f8ac5;
+  --violet: #7669b8;
+  --soil: #966943;
+  --red: #be4d3c;
+  --chain: #5d6f64;
+
+  --green-fg: #1f6f49;
+  --wheat-fg: #845c0a;
+  --sky-fg: #25679c;
+  --violet-fg: #5b4fa0;
+  --soil-fg: #7a5230;
+  --red-fg: #a63a2b;
+  --chain-fg: #4a5a50;
+
+  --shadow: 0 1px 2px rgb(22 33 27 / 0.05), 0 12px 32px -20px rgb(22 33 27 / 0.25);
+  --grid-line: rgb(22 33 27 / 0.05);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-text: var(--text);
+  --color-dim: var(--text-dim);
+
+  --color-green: var(--green);
+  --color-green-dim: var(--green-dim);
+  --color-green-fg: var(--green-fg);
+  --color-wheat: var(--wheat);
+  --color-wheat-dim: var(--wheat-dim);
+  --color-wheat-fg: var(--wheat-fg);
+  --color-sky: var(--sky);
+  --color-sky-fg: var(--sky-fg);
+  --color-violet: var(--violet);
+  --color-violet-fg: var(--violet-fg);
+  --color-soil: var(--soil);
+  --color-soil-fg: var(--soil-fg);
+  --color-red: var(--red);
+  --color-red-fg: var(--red-fg);
+  --color-chain: var(--chain);
+  --color-chain-fg: var(--chain-fg);
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --shadow-panel: var(--shadow);
+}
+
+/* ───────────────────────────── temel ───────────────────────────── */
+
+html {
+  /* akışkan temel punto: telefonda 16px, 1920px projeksiyonda ~19.5px */
+  font-size: clamp(16px, 0.6vw + 8px, 20px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  /* başıboş bir öğe yüzünden yatay kaydırma olmasın (sticky başlığı bozmaz) */
+  overflow-x: clip;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--wheat) 45%, transparent);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 3px solid var(--wheat);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ölçüm aleti ızgarası */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+/* ince teknik etiket */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.panel-2 {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.hairline {
+  border-color: var(--line);
+}
+
+/* çentikli köşe işaretleri (ölçüm çerçevesi) */
+.ticks {
+  position: relative;
+}
+.ticks::before,
+.ticks::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--line-strong);
+  pointer-events: none;
+}
+.ticks::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-top-left-radius: 6px;
+}
+.ticks::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  border-bottom-right-radius: 6px;
+}
+
+/* ana sayfa akışı: bölümler yakınlıkla oturur (mobilde kilitlemez) */
+.snap-flow {
+  scroll-snap-type: y proximity;
+}
+.snap-section {
+  scroll-snap-align: start;
+  scroll-margin-top: 64px;
+}
+
+/* sunum modu: kaydırma yok, dev tipografi */
+:root[data-present="1"] {
+  font-size: 22px;
+  overflow: hidden;
+}
+:root[data-present="1"] body {
+  overflow: hidden;
+}
+:root[data-present="1"][data-cursor="hidden"] * {
+  cursor: none !important;
+}
+
+/* karartma */
+.blackout {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+}
+
+/* hareket azaltma: tüm geçişler anında */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* nabız: canlı rozet ve LED */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+.pulse-dot {
+  animation: pulse-dot 1.6s var(--ease-soft) infinite;
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* kaydırma çubuğu */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+/* aralık kaydırıcı */
+input[type="range"] {
+  accent-color: var(--wheat);
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

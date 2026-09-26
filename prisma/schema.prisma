@@ -1,0 +1,137 @@
+// AgriShield veri modeli — AGRISHIELD_PROMPT.md Bölüm 6.1 (birebir; gerekli alanlar eklendi).
+// Varsayılan: SQLite (dosya tabanlı, internetsiz). Postgres için: DB_PROVIDER=postgres npm run db:generate
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Parcel {
+  id          String     @id // "P-1182" (takma ad; kişisel veri YOK)
+  name        String // "Siverek / Karakoyun mevkii"
+  village     String
+  district    String
+  crop        String // "bugday" | "kirmizi_mercimek" | "arpa"
+  areaDonum   Float
+  soilType    String // "killi" | "tinli" | "kumlu"
+  irrigated   Boolean    @default(false)
+  geojson     String // poligon
+  centroidLat Float
+  centroidLng Float
+  policies    Policy[]
+  readings    Reading[]
+  decisions   Decision[]
+}
+
+model Policy {
+  id           String     @id @default(cuid())
+  parcelId     String
+  parcel       Parcel     @relation(fields: [parcelId], references: [id])
+  season       String // "2025-2026"
+  sumInsuredTl Int // sigorta bedeli
+  payoutRate   Float // 0.5 → tetiklenirse bedelin %50'si
+  premiumTl    Int // brüt prim
+  subsidyRate  Float // 0.7
+  thresholds   String // JSON: karar motoru eşikleri (Bölüm 8)
+  status       String     @default("aktif")
+  decisions    Decision[]
+}
+
+model Station {
+  id         String    @id // "IST-SVK-01"
+  village    String
+  lat        Float
+  lng        Float
+  batteryV   Float?
+  lastSeenAt DateTime?
+  tamper     Boolean   @default(false)
+  readings   Reading[]
+}
+
+model Reading {
+  id           String   @id @default(cuid())
+  ts           DateTime
+  source       String // "station" | "satellite" | "meteo" | "device"
+  stationId    String?
+  station      Station? @relation(fields: [stationId], references: [id])
+  parcelId     String?
+  parcel       Parcel?  @relation(fields: [parcelId], references: [id])
+  soilMoisture Float? // %
+  airTempC     Float?
+  humidity     Float?
+  rainMm       Float?
+  windMs       Float?
+  ndvi         Float?
+  ndmi         Float?
+  cloudCover   Float? // 0–1, uydu için
+  spi30        Float? // meteoroloji için
+  flags        String? // JSON: ["supheli_nem_artisi"]
+  raw          String? // ham paket (denetim için)
+  scenario     String? // seed senaryosu (canlı cihazda null)
+
+  @@index([source, ts])
+  @@index([parcelId, ts])
+}
+
+model Decision {
+  id             String    @id @default(cuid())
+  code           String    @unique // "7F3A" → /k/7F3A
+  ts             DateTime
+  parcelId       String
+  parcel         Parcel    @relation(fields: [parcelId], references: [id])
+  policyId       String
+  policy         Policy    @relation(fields: [policyId], references: [id])
+  witnessSat     String // "EVET" | "HAYIR" | "VERI_YOK"
+  witnessStation String
+  witnessMeteo   String
+  yesCount       Int
+  outcome        String // "ODE" | "GRI_BOLGE" | "ODEME_YOK"
+  amountTl       Int?
+  evidence       String // JSON: tüm ölçümler + eşikler + model skoru
+  evidenceHash   String // sha256(evidence − chain − payment)
+  txHash         String? // zincir işlem no (mock ise "mock:...")
+  blockNumber    Int?
+  paymentRef     String? // FAST referansının hash'i
+  notifiedAt     DateTime?
+  // — eklenen alanlar —
+  simDate        String // kararın ait olduğu (simülasyon) günü, "YYYY-MM-DD"
+  scenario       String // senaryo anahtarı
+  runId          String    @default("seed") // aynı dünyadaki kararları gruplar (sezon tavanı/karantina)
+  status         String    @default("kesinlesti") // itiraz_penceresi | durduruldu | kesinlesti
+  windowEndsAt   DateTime? // itiraz penceresinin bitişi
+  chainMode      String? // "mock" | "amoy"
+  explorerUrl    String?
+  paymentRefText String? // FAST-SIM-xxxx (simülasyon referansı; ekranda gösterilir)
+  smsText        String?
+  latencies      String? // JSON: adım süreleri (ms)
+  createdAt      DateTime  @default(now())
+
+  @@index([parcelId, ts])
+  @@index([runId])
+  @@index([createdAt])
+}
+
+model ChainBlock {
+  number       Int      @id // MockChain blok numarası
+  hash         String   @unique
+  prevHash     String
+  ts           DateTime
+  kind         String // "genesis" | "decision" | "payment" | "breaker"
+  decisionCode String?
+  payload      String // JSON (kişisel veri yok)
+  txHash       String   @unique
+}
+
+model AuditLog {
+  id     String   @id @default(cuid())
+  ts     DateTime @default(now())
+  actor  String // "engine" | "operator" | "device" | "ai" | "sim"
+  action String
+  detail String
+
+  @@index([ts])
+}

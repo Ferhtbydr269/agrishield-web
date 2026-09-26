@@ -1,0 +1,341 @@
+{
+ "meta": {
+  "source": "ERA5 (Copernicus/ECMWF) — Open-Meteo arşiv API'si; Siverek 37,75°K 39,32°D",
+  "method": "Kritik dönem (1 Nis–20 May) boyunca günlük: (a) meteoroloji tanığı motorun kuralıyla, (b) 30 günlük yağış ≤ 10 mm (istasyon yağış kuralı, ERA5 vekil). Aynı gün (a)+(b) = iki tanıklı tetik yaklaşımı.",
+  "limitation": "Uydu (NDVI) ve istasyon toprak nemi koşulu geçmiş için ölçülemediğinden teste dahil değil; sonuç yağışa dayalı bir üst yaklaşımdır. Pilotta gerçek verimle doğrulanacak.",
+  "generatedAt": "2026-09-26T10:20:13.801Z",
+  "synthetic": false
+ },
+ "seasons": [
+  {
+   "season": "1991-1992",
+   "meteoDays": 19,
+   "rainRuleDays": 9,
+   "bothDays": 9,
+   "firstBoth": "1992-04-29",
+   "triggered": true,
+   "aprMayRainMm": 96
+  },
+  {
+   "season": "1992-1993",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 256
+  },
+  {
+   "season": "1993-1994",
+   "meteoDays": 7,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 45
+  },
+  {
+   "season": "1994-1995",
+   "meteoDays": 1,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 144
+  },
+  {
+   "season": "1995-1996",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 152
+  },
+  {
+   "season": "1996-1997",
+   "meteoDays": 3,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 135
+  },
+  {
+   "season": "1997-1998",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 151
+  },
+  {
+   "season": "1998-1999",
+   "meteoDays": 19,
+   "rainRuleDays": 9,
+   "bothDays": 9,
+   "firstBoth": "1999-05-12",
+   "triggered": true,
+   "aprMayRainMm": 51
+  },
+  {
+   "season": "1999-2000",
+   "meteoDays": 14,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 75
+  },
+  {
+   "season": "2000-2001",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 172
+  },
+  {
+   "season": "2001-2002",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 129
+  },
+  {
+   "season": "2002-2003",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 93
+  },
+  {
+   "season": "2003-2004",
+   "meteoDays": 21,
+   "rainRuleDays": 15,
+   "bothDays": 15,
+   "firstBoth": "2004-04-01",
+   "triggered": true,
+   "aprMayRainMm": 117
+  },
+  {
+   "season": "2004-2005",
+   "meteoDays": 5,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 65
+  },
+  {
+   "season": "2005-2006",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 159
+  },
+  {
+   "season": "2006-2007",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 118
+  },
+  {
+   "season": "2007-2008",
+   "meteoDays": 44,
+   "rainRuleDays": 10,
+   "bothDays": 10,
+   "firstBoth": "2008-04-28",
+   "triggered": true,
+   "aprMayRainMm": 41
+  },
+  {
+   "season": "2008-2009",
+   "meteoDays": 6,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 47
+  },
+  {
+   "season": "2009-2010",
+   "meteoDays": 26,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 54
+  },
+  {
+   "season": "2010-2011",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 256
+  },
+  {
+   "season": "2011-2012",
+   "meteoDays": 23,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 63
+  },
+  {
+   "season": "2012-2013",
+   "meteoDays": 9,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 155
+  },
+  {
+   "season": "2013-2014",
+   "meteoDays": 6,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 89
+  },
+  {
+   "season": "2014-2015",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 72
+  },
+  {
+   "season": "2015-2016",
+   "meteoDays": 18,
+   "rainRuleDays": 8,
+   "bothDays": 8,
+   "firstBoth": "2016-05-13",
+   "triggered": true,
+   "aprMayRainMm": 66
+  },
+  {
+   "season": "2016-2017",
+   "meteoDays": 3,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 138
+  },
+  {
+   "season": "2017-2018",
+   "meteoDays": 10,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 128
+  },
+  {
+   "season": "2018-2019",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 165
+  },
+  {
+   "season": "2019-2020",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 164
+  },
+  {
+   "season": "2020-2021",
+   "meteoDays": 28,
+   "rainRuleDays": 9,
+   "bothDays": 9,
+   "firstBoth": "2021-05-12",
+   "triggered": true,
+   "aprMayRainMm": 18
+  },
+  {
+   "season": "2021-2022",
+   "meteoDays": 13,
+   "rainRuleDays": 4,
+   "bothDays": 4,
+   "firstBoth": "2022-04-26",
+   "triggered": true,
+   "aprMayRainMm": 71
+  },
+  {
+   "season": "2022-2023",
+   "meteoDays": 1,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 141
+  },
+  {
+   "season": "2023-2024",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 92
+  },
+  {
+   "season": "2024-2025",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 139
+  },
+  {
+   "season": "2025-2026",
+   "meteoDays": 0,
+   "rainRuleDays": 0,
+   "bothDays": 0,
+   "firstBoth": null,
+   "triggered": false,
+   "aprMayRainMm": 198
+  }
+ ],
+ "summary": {
+  "n": 35,
+  "triggered": 7,
+  "probability": 0.2,
+  "meteoAnySeasons": 20,
+  "triggeredSeasons": [
+   "1991-1992",
+   "1998-1999",
+   "2003-2004",
+   "2007-2008",
+   "2015-2016",
+   "2020-2021",
+   "2021-2022"
+  ]
+ }
+}

@@ -1,0 +1,30 @@
+# bağımlılıklar
+node_modules/
+
+# next
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# veritabanı (seed ile yeniden üretilir)
+prisma/*.db
+prisma/*.db-journal
+
+# gizli anahtarlar — ASLA repoya girmez
+.env
+.env.local
+.env.*.local
+
+# test çıktıları
+test-results/
+playwright-report/
+reports/
+
+# sistem
+.DS_Store
+Thumbs.db
+*.log
+
+# veri indirme önbelleği
+scripts/.cache/

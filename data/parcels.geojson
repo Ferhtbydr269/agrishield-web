@@ -1,0 +1,178 @@
+{
+ "type": "FeatureCollection",
+ "properties": {
+  "note": "Örnek parsel sınırları — takma adlı, temsilidir. Gerçek tapu/ÇKS sınırı değildir.",
+  "origin": [
+   39.3895,
+   37.7985
+  ],
+  "synthetic": true
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "P-1182",
+    "name": "Siverek / Karakoyun mevkii",
+    "crop": "bugday",
+    "areaDonum": 80,
+    "areaM2Polygon": 80898,
+    "soilType": "killi",
+    "irrigated": false,
+    "kind": "parcel"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       39.386932,
+       37.796971
+      ],
+      [
+       39.391442,
+       37.796443
+      ],
+      [
+       39.39174,
+       37.798251
+      ],
+      [
+       39.387263,
+       37.798767
+      ],
+      [
+       39.386932,
+       37.796971
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "P-1207",
+    "name": "Siverek / Karakoyun kuzeydoğu",
+    "crop": "kirmizi_mercimek",
+    "areaDonum": 45,
+    "areaM2Polygon": 44688,
+    "soilType": "tinli",
+    "irrigated": false,
+    "kind": "parcel"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       39.389543,
+       37.79855
+      ],
+      [
+       39.391759,
+       37.798294
+      ],
+      [
+       39.392107,
+       37.800315
+      ],
+      [
+       39.389917,
+       37.800585
+      ],
+      [
+       39.389543,
+       37.79855
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "P-1244",
+    "name": "Siverek / Karakoyun kuzeybatı",
+    "crop": "bugday",
+    "areaDonum": 120,
+    "areaM2Polygon": 119877,
+    "soilType": "tinli",
+    "irrigated": true,
+    "kind": "parcel"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       39.387261,
+       37.798821
+      ],
+      [
+       39.389476,
+       37.798557
+      ],
+      [
+       39.390449,
+       37.803964
+      ],
+      [
+       39.388236,
+       37.804237
+      ],
+      [
+       39.387261,
+       37.798821
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "IST-SVK-01",
+    "kind": "station",
+    "name": "Köy referans istasyonu"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     39.389505,
+     37.798527
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "KOY",
+    "kind": "village",
+    "name": "Karakoyun (örnek köy)"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     39.37826,
+     37.793398
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "GW-01",
+    "kind": "gateway",
+    "name": "Kooperatif gateway"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     39.378501,
+     37.793462
+    ]
+   }
+  }
+ ]
+}
