@@ -30,7 +30,7 @@ export const CLOUD_API_POS: V3 = [-57, 60, -37];
 export const FIELD_BOUNDS = { minX: -64, maxX: 64, minZ: -15, maxZ: 74 };
 
 /** Toprak kesiti (kesit modunda zeminden çıkarılan dilim), istasyonun güneyinde */
-export const CUT = { x0: -1.4, x1: 1.4, z0: 28.9, z1: 30.8, depth: 1.25 };
+export const CUT = { x0: -1.4, x1: 1.4, z0: 28.9, z1: 32.4, depth: 1.25 };
 /** Kesitte düşey abartı: 60 cm → 1,2 m (etiketler gerçek derinliği gösterir) */
 export const DEPTH_EXAG = 2;
 
@@ -45,7 +45,7 @@ export interface CameraPreset {
 export const PRESETS: CameraPreset[] = [
   { key: 1, label: "Tüm saha", position: [62, 58, 96], target: [0, 0, 22], minDistance: 6 },
   { key: 2, label: "İstasyon yakın plan", position: [3.4, 2.7, 33.2], target: [0, 1.75, 28], minDistance: 2.5 },
-  { key: 3, label: "Toprak kesiti", position: [0.9, 0.55, 34.4], target: [0, -0.55, 29.9], minDistance: 2 },
+  { key: 3, label: "Toprak kesiti", position: [0.9, 1.75, 34.8], target: [0, -0.6, 29.3], minDistance: 2 },
   { key: 4, label: "Uydu görüşü", position: [0, 150, 98], target: [0, 0, 28], minDistance: 6 },
   { key: 5, label: "Veri akışı", position: [8, 62, 128], target: [4, 24, 16], minDistance: 6 },
   { key: 6, label: "Köy + gateway", position: [-18, 26, 14], target: [-58, 6, -38], minDistance: 6 },

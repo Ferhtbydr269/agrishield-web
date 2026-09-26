@@ -195,18 +195,27 @@ export function Ground({ cut, fade }: { cut: boolean; fade: boolean }) {
   );
 }
 
-export function Roads({ fade }: { fade: boolean }) {
+export function Roads({ fade, cut }: { fade: boolean; cut: boolean }) {
+  const planes = useMemo(
+    () => [
+      new THREE.Plane(new THREE.Vector3(-1, 0, 0), CUT.x0),
+      new THREE.Plane(new THREE.Vector3(1, 0, 0), -CUT.x1),
+      new THREE.Plane(new THREE.Vector3(0, 0, -1), CUT.z0),
+      new THREE.Plane(new THREE.Vector3(0, 0, 1), -CUT.z1),
+    ],
+    [],
+  );
   return (
     <group position={[0, 0.03, 0]}>
-      {/* doğu-batı tarla yolu (P-1182 kuzeyi, istasyonun önü) */}
+      {/* doğu-batı tarla yolu (P-1182 kuzeyi, istasyonun önü); kesit modunda dilim çıkarılır */}
       <mesh rotation-x={-Math.PI / 2} position={[0, 0, 28.75]}>
         <planeGeometry args={[126, 3]} />
-        <meshLambertMaterial color="#8e7c58" transparent={fade} opacity={fade ? 0.35 : 1} />
+        <meshLambertMaterial color="#8e7c58" transparent={fade} opacity={fade ? 0.35 : 1} clippingPlanes={cut ? planes : []} clipIntersection />
       </mesh>
       {/* kuzey-güney yol (P-1244 ile P-1207 arası) */}
       <mesh rotation-x={-Math.PI / 2} position={[0, 0, 51]}>
         <planeGeometry args={[3, 40]} />
-        <meshLambertMaterial color="#8e7c58" transparent={fade} opacity={fade ? 0.35 : 1} />
+        <meshLambertMaterial color="#8e7c58" transparent={fade} opacity={fade ? 0.35 : 1} clippingPlanes={cut ? planes : []} clipIntersection />
       </mesh>
       {/* köye giden yol */}
       <mesh rotation-x={-Math.PI / 2} rotation-z={-0.72} position={[-38, 0, -18]}>
