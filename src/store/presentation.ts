@@ -14,6 +14,7 @@ interface PresentationStore {
   startedAt: number | null;
   kiosk: boolean;
   clientId: string;
+  reloadNonce: number | null;
   applyRemote: (s: SceneState) => void;
   setScene: (i: number) => void;
   next: () => void;
@@ -37,7 +38,16 @@ export const usePresentation = create<PresentationStore>((set, get) => ({
   startedAt: null,
   kiosk: false,
   clientId,
-  applyRemote: (s) => set({ index: s.index, present: s.present, blackout: s.blackout, startedAt: s.startedAt }),
+  reloadNonce: null,
+  applyRemote: (s) => {
+    const st = get();
+    // /sunucu "sahneyi yeniden yükle": ana ekran kendini yeniler (sunucu ekranı değil)
+    if (st.reloadNonce != null && s.reloadNonce > st.reloadNonce && typeof window !== "undefined" && window.location.pathname === "/") {
+      window.location.reload();
+      return;
+    }
+    set({ index: s.index, present: s.present, blackout: s.blackout, startedAt: s.startedAt, reloadNonce: s.reloadNonce });
+  },
   setScene: (i) => {
     const index = Math.max(0, Math.min(9, i));
     set({ index });

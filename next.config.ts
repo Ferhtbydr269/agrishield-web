@@ -9,6 +9,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Doğrulama derlemesi çalışan dev sunucusunun .next klasörüne dokunmasın: NEXT_DIST_DIR=.next-verify npm run build
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   poweredByHeader: false,
   // ESLint ayrı çalışır; sahne build'i lint yüzünden durmasın.
   eslint: { ignoreDuringBuilds: true },

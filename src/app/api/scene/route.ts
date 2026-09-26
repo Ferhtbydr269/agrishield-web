@@ -23,10 +23,11 @@ export async function POST(req: Request) {
       present: z.boolean().optional(),
       blackout: z.boolean().optional(),
       resetTimer: z.boolean().optional(),
+      reload: z.boolean().optional(),
       origin: z.string().max(40).default("api"),
     }),
   );
   if (!b.ok) return b.res;
-  const { resetTimer, origin, ...patch } = b.data;
-  return ok(updateScene({ ...patch, ...(resetTimer ? { startedAt: Date.now() } : {}) }, origin));
+  const { resetTimer, reload, origin, ...patch } = b.data;
+  return ok(updateScene({ ...patch, ...(resetTimer ? { startedAt: Date.now() } : {}), ...(reload ? { reloadNonce: sceneState().reloadNonce + 1 } : {}) }, origin));
 }

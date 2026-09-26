@@ -33,9 +33,17 @@ export async function parseBody<T extends z.ZodTypeAny>(req: Request, schema: T)
 const buckets = (globalThis as unknown as { __agrishieldRl?: Map<string, number[]> }).__agrishieldRl ?? new Map<string, number[]>();
 (globalThis as unknown as { __agrishieldRl?: Map<string, number[]> }).__agrishieldRl = buckets;
 
+/**
+ * İstemci IP'si (hız sınırı anahtarı). X-Forwarded-For istemci tarafından sahtelenebilir; bu yüzden
+ * yalnız TRUST_PROXY=1 (başlığı yeniden yazan güvenilir vekil) iken kullanılır. Aksi hâlde (sahne, yerel ağ)
+ * tüm istemciler tek kovayı paylaşır — sınır atlatılamaz.
+ */
 export function clientIp(req: Request): string {
+  if (!config.trustProxy) return "yerel";
   const h = req.headers;
-  return (h.get("x-forwarded-for")?.split(",")[0] ?? h.get("x-real-ip") ?? "yerel").trim();
+  const parts = (h.get("x-forwarded-for") ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+  // vekilin eklediği en sağdaki adres güvenilirdir
+  return (parts[parts.length - 1] ?? h.get("x-real-ip") ?? "bilinmiyor").trim().slice(0, 64);
 }
 
 export function rateLimit(key: string, limit: number, windowMs = 60_000): boolean {
@@ -63,13 +71,18 @@ export function operatorToken(): string {
   return `${exp}.${sign(String(exp))}`;
 }
 
-export function isOperator(req: NextRequest | Request): boolean {
-  const cookie = (req.headers.get("cookie") ?? "").split(";").map((s) => s.trim()).find((s) => s.startsWith(`${OPERATOR_COOKIE}=`));
-  if (!cookie) return false;
-  const [exp, sig] = decodeURIComponent(cookie.slice(OPERATOR_COOKIE.length + 1)).split(".");
+/** Çerez değerini (exp.imza) doğrular — sunucu bileşenleri de kullanır. */
+export function isValidOperatorToken(value: string | undefined | null): boolean {
+  if (!value) return false;
+  const [exp, sig] = decodeURIComponent(value).split(".");
   if (!exp || !sig || Number(exp) < Date.now()) return false;
   const expect = sign(exp);
   return expect.length === sig.length && timingSafeEqual(Buffer.from(expect), Buffer.from(sig));
+}
+
+export function isOperator(req: NextRequest | Request): boolean {
+  const cookie = (req.headers.get("cookie") ?? "").split(";").map((s) => s.trim()).find((s) => s.startsWith(`${OPERATOR_COOKIE}=`));
+  return cookie ? isValidOperatorToken(cookie.slice(OPERATOR_COOKIE.length + 1)) : false;
 }
 
 /** Herkese açık dağıtımda (PUBLIC_DEPLOY=1) durum değiştiren uçlar operatör ister; sahnede (yerel) açıktır. */

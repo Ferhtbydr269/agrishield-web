@@ -32,6 +32,7 @@ interface DeviceMem {
   /** bu zamana kadar simüle cihaz hızlı ölçer (saksı değişimi sonrası) */
   fastUntil: number;
   lastSimStep: number;
+  forceSim: boolean;
 }
 
 const g = globalThis as unknown as { __agrishieldDevice?: DeviceMem };
@@ -53,6 +54,7 @@ function mem(): DeviceMem {
       watchdog: null,
       fastUntil: 0,
       lastSimStep: 0,
+      forceSim: false,
     };
   }
   return g.__agrishieldDevice;
@@ -60,7 +62,7 @@ function mem(): DeviceMem {
 
 export function deviceStatus(): DeviceState["status"] {
   const m = mem();
-  if (m.lastRealMs && Date.now() - m.lastRealMs < SILENT_MS) return "canli";
+  if (!m.forceSim && m.lastRealMs && Date.now() - m.lastRealMs < SILENT_MS) return "canli";
   return m.simEnabled ? "simule" : "sessiz";
 }
 
@@ -110,6 +112,7 @@ export function deviceState(): DeviceState {
     liveWitness,
     simPot: m.simPot,
     lastLatencyMs: m.lastLatencyMs,
+    forceSim: m.forceSim,
   };
 }
 
@@ -180,7 +183,8 @@ export async function ingestReal(p: IngestPacket, receivedAt: number, raw: strin
     m.lastSeq = p.seq;
   }
   m.lastRealMs = receivedAt;
-  accept(r, Boolean(p.tamper));
+  // acil durumda gerçek cihaz yok sayılır (paket kaydedilir ama canlı akışa girmez)
+  if (!m.forceSim) accept(r, Boolean(p.tamper));
   // gecikme: paket alındıktan SSE'ye verilene kadar (sunucu tarafı)
   m.lastLatencyMs = Date.now() - receivedAt;
   if (!wasLive) await audit("device", "cihaz_baglandi", `${STATION.id} canlı veri göndermeye başladı`);
@@ -274,6 +278,12 @@ export function setSimPot(pot: "islak" | "kuru") {
   void audit("operator", "simule_cihaz", `saksı: ${pot}`);
 }
 
+export function setForceSim(on: boolean) {
+  mem().forceSim = on;
+  void audit("operator", "cihaz_zorla_simule", on ? "açık" : "kapalı");
+  publish("device", deviceState());
+}
+
 export function setSimEnabled(on: boolean) {
   mem().simEnabled = on;
   publish("device", deviceState());
@@ -294,5 +304,7 @@ export function resetDevice() {
   // Geçmiş okumalar silinir: kurulum sırasında sensörün havadan toprağa geçmesi "ani artış" sayılmasın
   m.readings = [];
   m.flags = [];
+  // Cihaz değişimi (emülatör → gerçek ESP32) sonrası sıra sayacı baştan başlar; tekrar saldırısı sanılmasın
+  m.lastSeq = null;
   publish("device", deviceState());
 }

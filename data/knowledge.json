@@ -1,6 +1,6 @@
 {
  "meta": {
-  "builtAt": "2026-09-26T10:27:07.074Z",
+  "builtAt": "2026-09-26T20:17:29.016Z",
   "note": "AgriShield Asistanı bilgi tabanı. Rakamlar facts.ts'den, kurallar karar motorundan üretilir.",
   "counts": {
    "qa": 38,
@@ -839,7 +839,7 @@
    "kind": "varsayim",
    "derivation": "Ortalama bitkisel primin ~%1'i; takım varsayımı, pilotta netleşecek.",
    "source": "AlgoVest hesaplaması / varsayımı",
-   "url": "/durum#hesaplar"
+   "url": "/kaynaklar#hesaplar"
   },
   {
    "id": "F:samYillik",
@@ -848,7 +848,7 @@
    "kind": "hesap",
    "derivation": "2,70 milyon bitkisel poliçe × ₺50 izleme ücreti ≈ ₺135 milyon/yıl (veri/API gelirleri hariç)",
    "source": "AlgoVest hesaplaması / varsayımı",
-   "url": "/durum#hesaplar"
+   "url": "/kaynaklar#hesaplar"
   },
   {
    "id": "F:somAlt",
@@ -857,7 +857,7 @@
    "kind": "hesap",
    "derivation": "54 bin poliçe (%2) × ₺50 ≈ ₺2,7 milyon/yıl",
    "source": "AlgoVest hesaplaması / varsayımı",
-   "url": "/durum#hesaplar"
+   "url": "/kaynaklar#hesaplar"
   },
   {
    "id": "F:somUst",
@@ -866,7 +866,7 @@
    "kind": "hesap",
    "derivation": "135 bin poliçe (%5) × ₺50 ≈ ₺6,8 milyon/yıl",
    "source": "AlgoVest hesaplaması / varsayımı",
-   "url": "/durum#hesaplar"
+   "url": "/kaynaklar#hesaplar"
   },
   {
    "id": "F:istasyonParselBasi",
@@ -875,7 +875,7 @@
    "kind": "varsayim",
    "derivation": "1 istasyon ~$500–1.000 + gateway payı ~$100–200 ≈ $1.200 ÷ 150 parsel ≈ $8 (yaklaşık; gerçek teklif alınacak)",
    "source": "AlgoVest hesaplaması / varsayımı",
-   "url": "/durum#hesaplar"
+   "url": "/kaynaklar#hesaplar"
   },
   {
    "id": "F:tarlaBasiSensor",
@@ -884,7 +884,7 @@
    "kind": "varsayim",
    "derivation": "Hobi parçalarıyla bile ~$80–150; saha dayanıklılığında daha fazla (yaklaşık)",
    "source": "AlgoVest hesaplaması / varsayımı",
-   "url": "/durum#hesaplar"
+   "url": "/kaynaklar#hesaplar"
   },
   {
    "id": "F:zincirIhtiyacTps",
@@ -893,7 +893,7 @@
    "kind": "hesap",
    "derivation": "1.000.000 kayıt ÷ 86.400 sn ≈ 11,6 işlem/sn; Merkle köküyle günde 1 işlem yeterli",
    "source": "AlgoVest hesaplaması / varsayımı",
-   "url": "/durum#hesaplar"
+   "url": "/kaynaklar#hesaplar"
   },
   {
    "id": "F:era5Sezon2025Yagis",

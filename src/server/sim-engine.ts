@@ -432,6 +432,7 @@ export function setStationSource(src: "senaryo" | "canli") {
   engine().stationSource = src;
   rebuildHistory();
   changed();
+  void audit("operator", "istasyon_kaynagi", src);
 }
 
 export function setHoldPayment(on: boolean) {
@@ -439,6 +440,7 @@ export function setHoldPayment(on: boolean) {
   e.holdPayment = on;
   if (!on) for (const d of e.decided.values()) releasePayment(d.id);
   changed();
+  void audit("operator", "odeme_bekletme", on ? "açık" : "kapalı");
 }
 
 export function clearWorldFlags() {

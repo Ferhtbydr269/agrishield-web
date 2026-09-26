@@ -3,6 +3,7 @@ node_modules/
 
 # next
 .next/
+.next-*/
 out/
 next-env.d.ts
 *.tsbuildinfo
@@ -28,3 +29,7 @@ Thumbs.db
 
 # veri indirme önbelleği
 scripts/.cache/
+
+# firmware gizli ayarları ve derleme çıktısı
+firmware/**/secrets.h
+firmware/.pio/

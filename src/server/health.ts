@@ -47,7 +47,11 @@ export async function health(): Promise<Health> {
       dev.status === "canli"
         ? { level: "ok", label: "Yer istasyonu (ESP32)", detail: `Canlı donanım bağlı · son paket ${Math.round((Date.now() - (dev.lastSeenMs ?? Date.now())) / 1000)} sn önce · sıra ${dev.seq ?? "—"}` }
         : dev.status === "simule"
-          ? { level: "warn", label: "Yer istasyonu", detail: "Gerçek cihaz yok → simüle cihaz devrede (sahne yedeği)" }
+          ? {
+              level: "warn",
+              label: "Yer istasyonu",
+              detail: dev.forceSim ? "Sunucu ekranından simüle cihaz zorlandı (gerçek cihaz yok sayılıyor)" : "Gerçek cihaz yok → simüle cihaz devrede (sahne yedeği)",
+            }
           : { level: "error", label: "Yer istasyonu", detail: "Cihaz sessiz, simülasyon kapalı" },
     chain:
       ch.mode === "amoy"

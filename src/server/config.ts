@@ -33,6 +33,8 @@ export const config = {
   stageMode: env.NEXT_PUBLIC_STAGE_MODE !== "0",
   /** Herkese açık dağıtım: /operator kapalı */
   publicDeploy: env.PUBLIC_DEPLOY === "1",
+  /** X-Forwarded-For yalnız güvenilir bir vekil (Vercel/Netlify) başlığı yeniden yazıyorsa kullanılır */
+  trustProxy: env.TRUST_PROXY === "1" || env.VERCEL === "1" || env.NETLIFY === "true",
 };
 
 export type AppConfig = typeof config;

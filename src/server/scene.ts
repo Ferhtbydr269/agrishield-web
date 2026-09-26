@@ -3,9 +3,12 @@ import type { SceneState } from "@/lib/live-types";
 import { publish } from "./bus";
 
 const g = globalThis as unknown as { __agrishieldScene?: SceneState };
+const DEFAULT: SceneState = { index: 0, present: false, blackout: false, origin: "server", startedAt: null, reloadNonce: 0 };
 
 export function sceneState(): SceneState {
-  if (!g.__agrishieldScene) g.__agrishieldScene = { index: 0, present: false, blackout: false, origin: "server", startedAt: null };
+  // HMR sonrası eski şekilli durum kalmışsa eksik alanları varsayılanla tamamla
+  g.__agrishieldScene = { ...DEFAULT, ...g.__agrishieldScene };
+  if (!Number.isFinite(g.__agrishieldScene.reloadNonce)) g.__agrishieldScene.reloadNonce = 0;
   return g.__agrishieldScene;
 }
 

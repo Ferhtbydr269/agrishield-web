@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { clearDeviceFlags, deviceState, recentReadings, resetDevice, setSimEnabled, setSimPot } from "@/server/device";
+import { clearDeviceFlags, deviceState, recentReadings, resetDevice, setForceSim, setSimEnabled, setSimPot } from "@/server/device";
 import { guardMutation, noStore, ok, parseBody } from "@/server/http";
 import { ensureRuntime } from "@/server/runtime";
 
@@ -19,12 +19,13 @@ export async function POST(req: Request) {
   if (denied) return denied;
   const b = await parseBody(
     req,
-    z.object({ pot: z.enum(["islak", "kuru"]).optional(), clearFlags: z.boolean().optional(), simEnabled: z.boolean().optional(), reset: z.boolean().optional() }),
+    z.object({ pot: z.enum(["islak", "kuru"]).optional(), clearFlags: z.boolean().optional(), simEnabled: z.boolean().optional(), reset: z.boolean().optional(), forceSim: z.boolean().optional() }),
   );
   if (!b.ok) return b.res;
   if (b.data.reset) resetDevice();
   if (b.data.pot) setSimPot(b.data.pot);
   if (b.data.clearFlags) clearDeviceFlags();
   if (b.data.simEnabled !== undefined) setSimEnabled(b.data.simEnabled);
+  if (b.data.forceSim !== undefined) setForceSim(b.data.forceSim);
   return ok(deviceState());
 }

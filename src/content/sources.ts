@@ -132,7 +132,7 @@ export const SOURCES: Record<SourceId, Source> = {
     id: "algovest",
     title: "AlgoVest hesaplaması / varsayımı",
     publisher: "AgriShield ekibi",
-    url: "/durum#hesaplar",
+    url: "/kaynaklar#hesaplar",
     note: "Kamuya açık kaynaklardan türetilmiş hesap veya açıkça belirtilmiş varsayım.",
   },
 };

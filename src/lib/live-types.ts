@@ -113,6 +113,8 @@ export interface DeviceState {
   simPot: "islak" | "kuru";
   /** ölçüm → ekran gecikmesi (sunucu tarafı, ms) */
   lastLatencyMs: number | null;
+  /** acil durum: gerçek cihaz yok sayılır, simüle cihaz kullanılır */
+  forceSim: boolean;
 }
 
 export interface LiveReading {
@@ -135,6 +137,8 @@ export interface SceneState {
   blackout: boolean;
   origin: string;
   startedAt: number | null;
+  /** /sunucu "sahneyi yeniden yükle" — artınca ana ekran sayfayı yeniler */
+  reloadNonce: number;
 }
 
 export interface ChainStatusView {

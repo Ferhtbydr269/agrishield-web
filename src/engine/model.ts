@@ -69,3 +69,6 @@ export const EARLY_WARNING_SCORE = 0.6;
 export function shouldWarn(score: number, phenologyWeight: number, alreadyWarned: boolean, decided: boolean): boolean {
   return !alreadyWarned && !decided && phenologyWeight >= 0.8 && score >= EARLY_WARNING_SCORE;
 }
+
+/** /kaynaklar#motor sayfasında gösterilen katsayılar (uzman ayarı). */
+export const MODEL_WEIGHTS = { b0: B0, ...W } as const;

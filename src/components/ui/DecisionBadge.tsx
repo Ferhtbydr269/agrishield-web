@@ -20,8 +20,9 @@ export function DecisionBadge({ outcome, size = "md", withSub = true, className 
   }[size];
   return (
     <motion.div
-      initial={{ scale: 0.85, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
+      // opaklık animasyonu yok: sunucu çıktısında ve JS gecikse de rozet her zaman görünür
+      initial={{ scale: 0.9 }}
+      animate={{ scale: 1 }}
       transition={{ duration: 0.42, ease: [0.2, 0.8, 0.2, 1] }}
       className={cn("inline-flex items-center rounded-2xl border-2", o.cls, s.box, className)}
       data-testid={`decision-${outcome}`}
