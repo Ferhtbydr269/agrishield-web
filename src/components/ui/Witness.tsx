@@ -51,6 +51,8 @@ export function WitnessChip({
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
       className={cn("relative flex items-center rounded-xl border", v.cls, sizes.box, className)}
+      data-testid={`chip-${kind}`}
+      data-verdict={verdict ?? "BEKLE"}
       role="status"
       aria-label={`${meta.label} tanığı: ${v.text}`}
     >

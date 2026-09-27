@@ -42,7 +42,7 @@ export function LiveMoisturePanel({ stage = false, compact = false }: { stage?: 
   const pot = async (p: "islak" | "kuru") => postJson("/api/device", { pot: p }).catch(() => undefined);
   const clear = async () => postJson("/api/device", { clearFlags: true }).catch(() => undefined);
   return (
-    <div className={cn("panel p-5", stage && "p-7")} data-testid="live-panel">
+    <div className={cn("panel p-5", stage && "p-6")} data-testid="live-panel">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="eyebrow">Yer istasyonu · canlı ölçüm</div>
         <LiveBadge />
@@ -52,7 +52,7 @@ export function LiveMoisturePanel({ stage = false, compact = false }: { stage?: 
       </div>
       {!compact && (
         <div className="mt-4 rounded-lg border border-line bg-bg/40 p-2">
-          <MoistureSparkline stage={stage} height={stage ? 170 : 110} />
+          <MoistureSparkline stage={stage} height={stage ? 96 : 110} />
         </div>
       )}
       <div className="mt-4">
@@ -65,9 +65,9 @@ export function LiveMoisturePanel({ stage = false, compact = false }: { stage?: 
         {state?.flags.length ? <span className="text-wheat-fg">· şüpheli: {state.flags[state.flags.length - 1].label}</span> : null}
       </div>
       {simulated && (
-        <div className="mt-4 rounded-lg border border-wheat/40 bg-wheat/5 p-3">
-          <div className="text-xs text-wheat-fg">Gerçek cihaz bağlı değil — sahne yedeği (simüle cihaz):</div>
-          <div className="mt-2 flex flex-wrap gap-2">
+        <div className={cn("rounded-lg border border-wheat/40 bg-wheat/5", stage ? "mt-3 p-2" : "mt-4 p-3")}>
+          <div className={cn("text-xs text-wheat-fg", stage && "hidden")}>Gerçek cihaz bağlı değil — sahne yedeği (simüle cihaz):</div>
+          <div className={cn("flex flex-wrap gap-2", !stage && "mt-2")}>
             <button type="button" onClick={() => void pot("kuru")} className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-sm hover:bg-surface-2" data-testid="pot-kuru">
               <Sun className="size-4 text-wheat-fg" aria-hidden /> Kuru saksıya taşı
             </button>
@@ -82,7 +82,7 @@ export function LiveMoisturePanel({ stage = false, compact = false }: { stage?: 
           </div>
         </div>
       )}
-      <p className={cn("mt-3 text-dim", stage ? "text-sm" : "text-[0.7rem]")}>Demo cihazında yağış ölçer yok (0 mm kabul). Canlı tanık yalnız istasyonun kendi ölçümünü değerlendirir; sahada LoRa, demoda Wi-Fi.</p>
+      <p className={cn("mt-3 text-dim", stage ? "hidden" : "text-[0.7rem]")}>Demo cihazında yağış ölçer yok (0 mm kabul). Canlı tanık yalnız istasyonun kendi ölçümünü değerlendirir; sahada LoRa, demoda Wi-Fi.</p>
     </div>
   );
 }

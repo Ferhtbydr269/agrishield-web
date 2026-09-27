@@ -29,7 +29,9 @@ export const config = {
   villageDailyCap: Math.max(1, Number(env.VILLAGE_DAILY_CAP ?? 25)),
   publicBaseUrl: (env.PUBLIC_BASE_URL || "http://localhost:3000").replace(/\/$/, ""),
   /** SMS metnindeki kısa alan adı (prompt: agrishield.app/k/7F3A) */
-  smsHost: (env.PUBLIC_BASE_URL || "agrishield.app").replace(/^https?:\/\//, "").replace(/\/$/, ""),
+  smsHost: (env.SMS_LINK_HOST || (env.PUBLIC_BASE_URL && !/localhost|127\.0\.0\.1/.test(env.PUBLIC_BASE_URL) ? env.PUBLIC_BASE_URL : "agrishield.app"))
+    .replace(/^https?:\/\//, "")
+    .replace(/\/$/, ""),
   stageMode: env.NEXT_PUBLIC_STAGE_MODE !== "0",
   /** Herkese açık dağıtım: /operator kapalı */
   publicDeploy: env.PUBLIC_DEPLOY === "1",

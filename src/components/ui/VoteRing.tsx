@@ -41,7 +41,7 @@ export function VoteRing({
 
   return (
     <div className="relative" style={{ width: size, height: size }} role="img" aria-label={`Oylama: ${yes}/3 EVET${center ? `, karar ${center}` : ""}`}>
-      <svg viewBox="0 0 200 200" className="size-full">
+      <svg viewBox="-14 -14 228 228" className="size-full" overflow="visible">
         <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--line)" strokeWidth="16" />
         {ORDER.map((k, i) => {
           const a0 = start + i * seg + gap;
@@ -81,8 +81,8 @@ export function VoteRing({
         {showLabels &&
           ORDER.map((k, i) => {
             const a = start + (i + 0.5) * seg;
-            const lx = cx + (r + 22) * Math.cos(a);
-            const ly = cy + (r + 22) * Math.sin(a);
+            const lx = cx + (r + 29) * Math.cos(a);
+            const ly = cy + (r + 29) * Math.sin(a);
             return (
               <text key={k} x={lx} y={ly + 3} textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill="var(--text-dim)" fontWeight="600" letterSpacing="0.6">
                 {LABEL[k].toUpperCase()}

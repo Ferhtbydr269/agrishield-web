@@ -12,7 +12,7 @@ export function PhoneMock({ messages, stage = false, className }: { messages: Sm
   return (
     <div className={cn("relative", className)} style={{ width: w }}>
       <div className="rounded-[2.2rem] border-[3px] border-line-strong bg-[#0b120e] p-2.5 shadow-2xl">
-        <div className="overflow-hidden rounded-[1.7rem] bg-[#f4f1ea] text-[#16211b]" style={{ height: stage ? 560 : 440 }}>
+        <div className="flex flex-col overflow-hidden rounded-[1.7rem] bg-[#f4f1ea] text-[#16211b]" style={{ height: stage ? 560 : 440 }}>
           <div className="flex items-center justify-between bg-[#e9e4d8] px-5 py-2 font-mono text-[0.7rem]">
             <span>09:12</span>
             <span className="flex items-center gap-1">
@@ -27,10 +27,10 @@ export function PhoneMock({ messages, stage = false, className }: { messages: Sm
               <div className="text-[0.68rem] text-black/55">SMS · +90 5** *** ** 17</div>
             </div>
           </div>
-          <div className="flex flex-col gap-2.5 p-3.5">
+          <div className="flex min-h-0 flex-1 flex-col justify-end gap-2.5 overflow-hidden p-3.5">
             <AnimatePresence initial={false}>
               {shown.length === 0 && (
-                <div className="mt-16 flex flex-col items-center gap-2 text-center text-sm text-black/65">
+                <div className="mb-auto mt-16 flex flex-col items-center gap-2 text-center text-sm text-black/65">
                   <MessageSquareText className="size-7" aria-hidden />
                   Henüz mesaj yok
                 </div>

@@ -40,14 +40,14 @@ export function Stat({
   } as const;
   return (
     <figure className={cn("min-w-0", className)}>
-      <div className={cn("font-display font-extrabold leading-none tracking-tight tabular", sizes[size], tones[tone])}>
+      <div className={cn("flex flex-wrap items-baseline font-display font-extrabold leading-none tracking-tight tabular", sizes[size], tones[tone])}>
         {v === null ? (
           <PendingBadge />
         ) : (
-          <>
+          <span className="whitespace-nowrap">
             {v}
-            {fact.unit && <span className="ml-1.5 text-[0.42em] font-bold tracking-normal text-dim">{fact.unit}</span>}
-          </>
+            {fact.unit && <span className={cn("text-[0.42em] font-bold tracking-normal text-dim", !fact.unit.startsWith("'") && "ml-1.5")}>{fact.unit}</span>}
+          </span>
         )}
         <SourceTag factId={factId} className="ml-1 text-base" />
       </div>

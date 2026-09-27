@@ -29,8 +29,8 @@ const TEXT = { dim: "text-dim", green: "text-green-fg", wheat: "text-wheat-fg", 
 function Row({ title, marks, stage, testid }: { title: string; marks: Mark[]; stage?: boolean; testid: string }) {
   return (
     <div data-testid={testid}>
-      <div className={cn("mb-3 font-semibold", stage ? "text-2xl" : "text-base")}>{title}</div>
-      <div className={cn("relative", stage ? "h-32" : "h-24")}>
+      <div className={cn("font-semibold", stage ? "mb-1 text-xl" : "mb-3 text-base")}>{title}</div>
+      <div className={cn("relative", stage ? "h-[6.5rem]" : "h-24")}>
         <div className="absolute inset-x-0 top-1/2 h-px bg-line-strong" />
         {/* kuraklık dönemi */}
         <div className="absolute top-[35%] h-[30%] rounded-md bg-red/20" style={{ left: `${pos(5, 0.2)}%`, width: `${pos(7, 0.9) - pos(5, 0.2)}%` }} aria-hidden />
@@ -66,7 +66,7 @@ function Row({ title, marks, stage, testid }: { title: string; marks: Mark[]; st
 
 export function TwoTimelines({ stage = false }: { stage?: boolean }) {
   return (
-    <div className={cn("panel p-5", stage && "p-8")}>
+    <div className={cn("panel p-5", stage && "px-8 py-5")}>
       <div className="relative mb-2 grid grid-cols-12 font-mono text-dim" aria-hidden>
         {MONTHS.map((m) => (
           <div key={m} className={cn("text-center", stage ? "text-base" : "text-[0.7rem]")}>
@@ -74,7 +74,7 @@ export function TwoTimelines({ stage = false }: { stage?: boolean }) {
           </div>
         ))}
       </div>
-      <div className="grid gap-6">
+      <div className={cn("grid", stage ? "gap-2" : "gap-6")}>
         <Row title="Köy bazlı kuraklık sigortası (bugün)" marks={TODAY} stage={stage} testid="timeline-today" />
         <Row title="AgriShield (parsel bazlı, üç tanık)" marks={AGRI} stage={stage} testid="timeline-agrishield" />
       </div>

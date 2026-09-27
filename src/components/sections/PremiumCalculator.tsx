@@ -46,13 +46,13 @@ export function PremiumCalculator({ backtestP, stage = false }: { backtestP: num
   const fee = FACTS.izlemeUcreti.value ?? 0;
 
   return (
-    <div className={cn("panel ticks p-5", stage && "p-8")} data-testid="premium-calculator">
+    <div className={cn("panel ticks p-5", stage && "p-7")} data-testid="premium-calculator">
       <div className="flex items-center gap-2">
         <Calculator className="size-5 text-wheat-fg" aria-hidden />
         <span className="eyebrow">Prim hesaplayıcı · sigortacının gözüyle</span>
       </div>
       <div className={cn("mt-5 grid gap-6", stage ? "grid-cols-2" : "md:grid-cols-2")}>
-        <div className="grid gap-4">
+        <div className="grid content-start gap-4">
           <Slider id="c-sum" label="Sigorta bedeli" value={sum} min={20_000} max={300_000} step={5_000} fmt={(v) => `₺${fmtTl(v)}`} onChange={setSum} stage={stage} />
           <Slider id="c-rate" label="Tetiklenince ödeme oranı" value={rate} min={0.2} max={1} step={0.05} fmt={pctFmt} onChange={setRate} stage={stage} />
           <Slider id="c-p" label="Tetik olasılığı (yıllık)" value={p} min={0.02} max={0.4} step={0.01} fmt={pctFmt} onChange={setP} stage={stage} />
@@ -77,13 +77,13 @@ export function PremiumCalculator({ backtestP, stage = false }: { backtestP: num
           ].map(([k, v, f, tone]) => (
             <div key={k as string} className="flex items-baseline justify-between gap-3 border-b border-line pb-2">
               <div>
-                <div className={stage ? "text-lg" : "text-sm"}>{k as string}</div>
+                <div className={stage ? "text-base font-semibold" : "text-sm"}>{k as string}</div>
                 <div className="font-mono text-[0.68rem] text-dim">{f as string}</div>
               </div>
               <div
                 className={cn(
                   "font-display font-extrabold tabular",
-                  stage ? "text-4xl" : "text-2xl",
+                  stage ? "text-[1.75rem]" : "text-2xl",
                   tone === "wheat" ? "text-wheat-fg" : tone === "green" ? "text-green-fg" : tone === "sky" ? "text-sky-fg" : "text-text",
                 )}
                 data-testid={`calc-${(k as string).replace(/\s/g, "-")}`}

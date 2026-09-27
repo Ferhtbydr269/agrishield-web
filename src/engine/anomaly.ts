@@ -14,6 +14,9 @@ export const SPIKE_POINTS = 8;
 export const SPIKE_WINDOW_MS = 60 * 60 * 1000;
 export const CROSS_SIGMA = 3;
 
+/** Türkçe ondalık (virgül), 1 basamak — kanıt metinleri ekranda ve zincirde aynı görünür. */
+const tr1 = (v: number) => v.toFixed(1).replace(".", ",");
+
 export function makeFlag(code: FlagCode, ts: number, detail: string): StationFlag {
   return { code, ts, label: FLAG_LABEL[code], detail };
 }
@@ -33,7 +36,7 @@ export function detectMoistureSpike(readings: StationReading[], regionalRainLast
     return makeFlag(
       "supheli_nem_artisi",
       last.ts,
-      `1 saat içinde nem %${minBefore.toFixed(1)} → %${last.soilMoisture.toFixed(1)} (+${rise.toFixed(1)} puan), yağış 0 mm.`,
+      `1 saat içinde nem %${tr1(minBefore)} → %${tr1(last.soilMoisture)} (+${tr1(rise)} puan), yağış 0 mm.`,
     );
   }
   return null;
@@ -64,7 +67,7 @@ export function detectCrossInconsistency(
     return makeFlag(
       "capraz_tutarsizlik",
       ts,
-      `İstasyon %${current.toFixed(1)} okuyor (yakın geçmiş ort. %${m.toFixed(1)}, z = ${z.toFixed(1)}); uydu ve meteoroloji kuraklık görmüyor.`,
+      `İstasyon %${tr1(current)} okuyor (yakın geçmiş ort. %${tr1(m)}, z = ${tr1(z)}); uydu ve meteoroloji kuraklık görmüyor.`,
     );
   }
   return null;

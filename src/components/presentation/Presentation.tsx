@@ -242,7 +242,7 @@ export function Presentation({ children, backtestP }: { children: React.ReactNod
               </button>
             </div>
             {/* sahne */}
-            <div className="relative min-h-0 flex-1 px-14 pb-28 pt-8">
+            <div className="relative min-h-0 flex-1 px-14 pb-[148px] pt-7">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={index}

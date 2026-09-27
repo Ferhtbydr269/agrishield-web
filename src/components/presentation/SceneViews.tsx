@@ -31,12 +31,12 @@ const FieldSimulator = dynamic(() => import("@/scene3d/FieldSimulator").then((m)
 
 function SceneTitle({ i, children, sub }: { i: number; children: React.ReactNode; sub?: React.ReactNode }) {
   return (
-    <div className="mb-8">
+    <div className="mb-7">
       <div className="font-mono text-[18px] uppercase tracking-[0.2em] text-wheat-fg">
         {SCENES[i].key} · {SCENES[i].title}
       </div>
-      <h2 className="mt-3 text-[64px] font-extrabold leading-[1.02] xl:text-[72px]">{children}</h2>
-      {sub && <div className="mt-4 max-w-[1300px] text-[26px] leading-snug text-dim">{sub}</div>}
+      <h2 className="mt-3 text-[56px] font-extrabold leading-[1.04] xl:text-[64px]">{children}</h2>
+      {sub && <div className="mt-4 max-w-[1300px] text-[24px] leading-snug text-dim">{sub}</div>}
     </div>
   );
 }
@@ -54,7 +54,7 @@ export function SceneMehmet() {
   const sim = useLive((s) => s.sim);
   const ndvi = Object.fromEntries((sim?.parcels ?? []).map((p) => [p.id, p.ndvi]));
   return (
-    <div className="grid h-full grid-cols-[1.1fr_1fr] items-center gap-14">
+    <div className="grid h-full grid-cols-[1.25fr_1fr] items-center gap-14">
       <div>
         <SceneTitle i={0} sub="Siverek'te 80 dönüm kıraç buğday. Mart'ta yağmur yok, Nisan'da buğday başak vermeden sararıyor. Kredi Haziran'da; sigortanın parası hasattan sonra.">
           Kuraklık Nisan'da,
@@ -72,7 +72,7 @@ export function SceneMehmet() {
           <span className="font-mono text-[18px] text-dim">P-1182 · Karakoyun · Siverek</span>
           <SampleDataBadge />
         </div>
-        <ParcelMap ndvi={ndvi} focus="P-1182" showVillage stage className="max-h-[640px]" />
+        <ParcelMap ndvi={ndvi} focus="P-1182" showVillage stage className="max-h-[600px]" />
       </div>
     </div>
   );
@@ -82,14 +82,12 @@ export function SceneMehmet() {
 export function SceneTimelines() {
   return (
     <div className="flex h-full flex-col justify-center">
-      <SceneTitle i={1} sub={COPY.problem.body}>
-        Köy ortalaması iyiyse hiç ödenmiyor.
-      </SceneTitle>
+      <SceneTitle i={1}>Köy ortalaması iyiyse hiç ödenmiyor.</SceneTitle>
       <TwoTimelines stage />
-      <div className="mt-10 grid grid-cols-3 gap-10">
-        <Stat factId="koyBazliOdemeSuresi" size="xl" />
-        <Stat factId="hasarIhbari2024" size="xl" />
-        <Stat factId="tekirdagPilotKatilim" size="xl" tone="green" />
+      <div className="mt-8 grid grid-cols-3 gap-10">
+        <Stat factId="koyBazliOdemeSuresi" size="lg" />
+        <Stat factId="hasarIhbari2024" size="lg" />
+        <Stat factId="tekirdagPilotKatilim" size="lg" tone="green" />
       </div>
     </div>
   );
@@ -127,17 +125,17 @@ export function SceneField({ preset }: { preset: number }) {
 /* 5 · Jüri testi */
 export function SceneJury() {
   return (
-    <div className="grid h-full grid-cols-[1.35fr_1fr] gap-8">
-      <div className="flex min-h-0 flex-col">
-        <SceneTitle i={4}>Sayın jüri, sensörü kuru toprağa koyar mısınız?</SceneTitle>
-        <div className="min-h-0 flex-1 overflow-hidden rounded-2xl border border-line">
+    <div className="flex h-full flex-col">
+      <SceneTitle i={4}>Sayın jüri, sensörü kuru toprağa koyar mısınız?</SceneTitle>
+      <div className="grid min-h-0 flex-1 grid-cols-[1.3fr_1fr] gap-8">
+        <div className="min-h-0 overflow-hidden rounded-2xl border border-line">
           <ErrorBoundary label="3D kesit">
             <FieldSimulator stage initialPreset={3} liveSoil height="100%" />
           </ErrorBoundary>
         </div>
-      </div>
-      <div className="flex flex-col justify-center">
-        <LiveMoisturePanel stage />
+        <div className="min-h-0">
+          <LiveMoisturePanel stage />
+        </div>
       </div>
     </div>
   );
@@ -224,15 +222,15 @@ export function ScenePayment() {
   const f = focusParcel(sim);
   const d = f?.decision;
   return (
-    <div className="grid h-full grid-cols-[1.1fr_auto_auto] items-center gap-12">
+    <div className="grid h-full grid-cols-[1.3fr_auto_auto] items-center gap-10">
       <div>
         <SceneTitle i={7}>Para FAST ile IBAN'a. Kripto yok.</SceneTitle>
         {d?.outcome === "ODE" ? <PaymentCard payment={payments[d.code] ?? null} amountTl={d.amountTl} stage /> : <p className="text-[28px] text-dim">Önce bir ödeme kararı gerekiyor (6–7. sahne).</p>}
       </div>
       <PhoneMock messages={sms} stage />
       <div className="flex flex-col items-center gap-4">
-        {d && origin && <QR value={`${origin}/k/${d.code}`} size={300} label={`kanıt: /k/${d.code}`} />}
-        <p className="max-w-[300px] text-center text-[20px] text-dim">Telefonunuzla okutun: kararın tüm delili, hash'i kendiniz doğrulayın.</p>
+        {d && origin && <QR value={`${origin}/k/${d.code}`} size={260} label={`kanıt: /k/${d.code}`} />}
+        <p className="max-w-[260px] text-center text-[20px] text-dim">Telefonunuzla okutun: kararın tüm delili, hash'i kendiniz doğrulayın.</p>
       </div>
     </div>
   );
@@ -273,16 +271,16 @@ export function SceneManipulation() {
 /* 0 · Ticari */
 export function SceneCommercial({ backtestP }: { backtestP: number }) {
   return (
-    <div className="grid h-full grid-cols-[1fr_1.35fr] items-center gap-12">
+    <div className="grid h-full grid-cols-[1.1fr_1fr] items-center gap-10">
       <div>
         <SceneTitle i={9} sub={COPY.commercial.body}>
           Çiftçiden değil, sigortacıdan.
         </SceneTitle>
-        <div className="grid grid-cols-2 gap-10">
-          <Stat factId="samYillik" size="xl" tone="wheat" />
-          <Stat factId="somUst" size="xl" tone="green" label="SOM üst sınır (ilk 3 yıl, %5)" />
-          <Stat factId="izlemeUcreti" size="xl" />
-          <Stat factId="tarsimBitkiselPolice2024" size="xl" />
+        <div className="grid grid-cols-2 gap-x-10 gap-y-8">
+          <Stat factId="samYillik" size="lg" tone="wheat" />
+          <Stat factId="somUst" size="lg" tone="green" label="SOM üst sınır (ilk 3 yıl, %5)" />
+          <Stat factId="izlemeUcreti" size="lg" />
+          <Stat factId="tarsimBitkiselPolice2024" size="lg" />
         </div>
       </div>
       <PremiumCalculator backtestP={backtestP} stage />

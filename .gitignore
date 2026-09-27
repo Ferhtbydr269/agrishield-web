@@ -33,3 +33,6 @@ scripts/.cache/
 # firmware gizli ayarları ve derleme çıktısı
 firmware/**/secrets.h
 firmware/.pio/
+
+# otomatik üretilen yedek görüntüler (npm run screens) — USB'ye kopyalanır
+public/yedek/

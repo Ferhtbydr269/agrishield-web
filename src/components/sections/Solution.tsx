@@ -36,14 +36,14 @@ export function ThreeWitnessesInteractive({ stage = false }: { stage?: boolean }
               className={cn(
                 "group flex items-center gap-4 rounded-2xl border p-4 text-left transition-colors",
                 verdict === "EVET" ? "border-green/60 bg-green/10" : verdict === "HAYIR" ? "border-red/50 bg-red/5" : "border-wheat/50 bg-wheat/5",
-                stage && "p-6",
+                stage && "px-6 py-4",
               )}
               aria-label={`${m.label} tanığı: ${verdict}. Değiştirmek için tıklayın.`}
             >
               <m.Icon className={cn("shrink-0", m.accent, stage ? "size-12" : "size-8")} aria-hidden />
               <div className="min-w-0 flex-1">
                 <div className={cn("font-semibold", stage ? "text-3xl" : "text-lg")}>{m.label}</div>
-                <div className={cn("text-dim", stage ? "text-xl" : "text-sm")}>{DESC[k]}</div>
+                <div className={cn("text-dim", stage ? "text-lg leading-snug" : "text-sm")}>{DESC[k]}</div>
               </div>
               <span
                 className={cn(
