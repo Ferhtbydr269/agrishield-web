@@ -113,7 +113,7 @@ export function SceneField({ preset }: { preset: number }) {
     <div className="flex h-full flex-col">
       <div className="mb-4 flex items-end justify-between">
         <SceneTitle i={3}>Kurduğumuz istasyonun dijital ikizi.</SceneTitle>
-        <Hint>1–6 kamera · L etiket · X kesit · E patlat · F veri akışı</Hint>
+        <Hint>Shift+1–6 kamera · L etiket · X kesit · E patlat · F veri akışı</Hint>
       </div>
       <div className="min-h-0 flex-1 overflow-hidden rounded-2xl border border-line">
         <ErrorBoundary label="3D saha">

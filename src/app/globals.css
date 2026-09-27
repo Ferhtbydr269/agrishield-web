@@ -72,6 +72,47 @@
   --grid-line: rgb(22 33 27 / 0.05);
 }
 
+/*
+ * Web fontları gelene kadar ölçüleri eşitlenmiş yedek fontlar → font değişiminde metin yeniden kırılmaz (CLS olmaz).
+ * size-adjust: Türkçe örnek metinde ölçülen genişlik oranı (Chrome, canvas measureText ile ölçüldü);
+ * ascent/descent: Next.js capsize metrikleri ÷ size-adjust.
+ */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial"), local("ArialMT"), local("Helvetica"), local("Roboto");
+  font-weight: 100 549;
+  size-adjust: 105.27%;
+  ascent-override: 92.03%;
+  descent-override: 22.92%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"), local("Roboto Bold");
+  font-weight: 550 900;
+  size-adjust: 101.55%;
+  ascent-override: 95.4%;
+  descent-override: 23.75%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Bricolage Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Bold"), local("Roboto Bold");
+  font-weight: 100 900;
+  size-adjust: 102.05%;
+  ascent-override: 91.13%;
+  descent-override: 26.46%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "JetBrains Fallback";
+  src: local("Courier New"), local("CourierNewPSMT"), local("Roboto Mono");
+  size-adjust: 99.98%;
+  ascent-override: 102.02%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -98,9 +139,9 @@
   --color-chain: var(--chain);
   --color-chain-fg: var(--chain-fg);
 
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --font-display: "Bricolage Grotesque", "Bricolage Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", "Inter Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "JetBrains Fallback", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
   --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
   --shadow-panel: var(--shadow);

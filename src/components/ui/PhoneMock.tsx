@@ -30,7 +30,7 @@ export function PhoneMock({ messages, stage = false, className }: { messages: Sm
           <div className="flex flex-col gap-2.5 p-3.5">
             <AnimatePresence initial={false}>
               {shown.length === 0 && (
-                <div className="mt-16 flex flex-col items-center gap-2 text-center text-sm text-black/45">
+                <div className="mt-16 flex flex-col items-center gap-2 text-center text-sm text-black/65">
                   <MessageSquareText className="size-7" aria-hidden />
                   Henüz mesaj yok
                 </div>
@@ -49,7 +49,7 @@ export function PhoneMock({ messages, stage = false, className }: { messages: Sm
                   data-testid="sms-bubble"
                 >
                   {m.text}
-                  <div className="mt-1 text-right font-mono text-[0.6rem] text-black/45">{new Date(m.at).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</div>
+                  <div className="mt-1 text-right font-mono text-[0.6rem] text-black/65">{new Date(m.at).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</div>
                 </motion.div>
               ))}
             </AnimatePresence>

@@ -141,6 +141,12 @@ export function Presentation({ children, backtestP }: { children: React.ReactNod
         return;
       }
       if (!present) return;
+      // 3D sahnesinde kamera: Shift+1–6 (düz rakamlar sahne değiştirir; e.code klavye düzeninden bağımsız)
+      if (index === 3 && e.shiftKey && /^Digit[1-6]$/.test(e.code)) {
+        e.preventDefault();
+        setFieldPreset(Number(e.code.slice(5)));
+        return;
+      }
       if (/^[0-9]$/.test(k)) {
         e.preventDefault();
         setScene(k === "0" ? 9 : Number(k) - 1);
@@ -162,8 +168,6 @@ export function Presentation({ children, backtestP }: { children: React.ReactNod
         toggleBlackout();
       } else if (k === "Escape") {
         togglePresent(false);
-      } else if (index === 3 && /^[1-6]$/.test(k)) {
-        setFieldPreset(Number(k));
       }
     },
     [present, index, togglePresent, setScene, next, prev, toggleBlackout],

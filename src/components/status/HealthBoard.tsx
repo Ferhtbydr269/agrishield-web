@@ -141,7 +141,7 @@ export function HealthBoard({ initial }: { initial: Health }) {
               <li key={path} className="flex items-baseline gap-2">
                 <span className={cn("w-11 shrink-0 font-mono text-xs font-bold", m === "GET" ? "text-sky-fg" : "text-wheat-fg")}>{m}</span>
                 {m === "GET" && path !== "/api/stream" ? (
-                  <Link href={path} className="font-mono text-xs underline decoration-line underline-offset-4 hover:text-text" prefetch={false}>
+                  <Link href={path} className="inline-flex min-h-6 items-center font-mono text-xs underline decoration-line underline-offset-4 hover:text-text" prefetch={false}>
                     {path}
                   </Link>
                 ) : (

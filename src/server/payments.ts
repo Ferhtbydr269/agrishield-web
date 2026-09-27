@@ -2,7 +2,7 @@
  * ÖDEME (TAKLİT) — AGRISHIELD_PROMPT.md Bölüm 10.
  * Gerçek banka arayüzü taklidi YOK (etik değil). Sade bir "ödeme talimatı" üretilir:
  * FAST-SIM-xxxx referansı, 1,2 sn gecikmeyle "başarılı"; referansın hash'i zincire yazılır.
- * "Gerçek ödeme yapıldı" ifadesi hiçbir yerde kullanılmaz.
+ * "Gerçek ödeme yapıldı" ifadesi hiçbir yerde kullanılmaz. (lint-facts: izin)
  */
 import { sha256Hex, sha256Hex0x } from "@/lib/sha256";
 

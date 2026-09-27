@@ -110,7 +110,7 @@ export function Fallback2D({ reason, height = 640, liveSoil = false, onRetry }: 
           key={s.id}
           type="button"
           onClick={() => setSel(s.id)}
-          className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-wheat/60 bg-bg/85 px-1.5 py-0.5 font-mono text-[11px] font-bold text-wheat-fg hover:bg-wheat hover:text-[#1a1305]"
+          className="absolute -translate-x-1/2 -translate-y-1/2 inline-flex min-h-6 min-w-6 items-center justify-center rounded-full border border-wheat/60 bg-bg/85 px-1.5 py-0.5 font-mono text-[11px] font-bold text-wheat-fg hover:bg-wheat hover:text-[#1a1305]"
           style={{ left: `${(s.x / 800) * 100}%`, top: `${(s.y / 560) * 100}%` }}
           aria-label={`${s.id}: ${s.name}`}
         >

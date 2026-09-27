@@ -1,11 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/inter/700.css";
-import "@fontsource/bricolage-grotesque/700.css";
-import "@fontsource/bricolage-grotesque/800.css";
-import "@fontsource/jetbrains-mono/400.css";
-import "@fontsource/jetbrains-mono/600.css";
 import "./globals.css";
 import { AppShell } from "@/components/shell/AppShell";
 
@@ -29,10 +22,14 @@ export const viewport: Viewport = {
   ],
 };
 
-/** Boyamadan önce temayı uygula (yanıp sönme olmasın). Statik, kullanıcı girdisi içermez. */
+/**
+ * Boyamadan önce temayı uygula (yanıp sönme olmasın). Statik, kullanıcı girdisi içermez.
+ * Web fontları ilk boyamadan SONRA yüklenir (public/fonts/fonts.css): metin önce ölçüsü eşitlenmiş yedek fontla
+ * görünür, font gelince kaymadan değişir. Mobilde ilk boyamayı ~1 sn öne çeker; sahnede fontlar yerelden anında gelir.
+ */
 const themeBoot = `(function(){try{var d=document.documentElement;var s=localStorage.getItem('as-theme');var stage=${
   process.env.NEXT_PUBLIC_STAGE_MODE === "0" ? "false" : "true"
-};var t=s||(stage?'dark':(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));d.setAttribute('data-theme',t);var q=new URLSearchParams(location.search);if(q.get('lang')==='en'){d.setAttribute('lang','en')}}catch(e){}})();`;
+};var t=s||(stage?'dark':(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));d.setAttribute('data-theme',t);var q=new URLSearchParams(location.search);if(q.get('lang')==='en'){d.setAttribute('lang','en')}}catch(e){}var f=function(){if(document.getElementById('as-fonts'))return;var l=document.createElement('link');l.id='as-fonts';l.rel='stylesheet';l.href='/fonts/fonts.css';document.head.appendChild(l)};requestAnimationFrame(function(){requestAnimationFrame(f)});setTimeout(f,1500)})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

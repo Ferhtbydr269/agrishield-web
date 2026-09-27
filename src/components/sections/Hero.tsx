@@ -56,18 +56,18 @@ export function Hero() {
       <Contours />
       <div className="relative mx-auto grid min-h-[calc(100dvh-4rem)] max-w-[1360px] items-center gap-12 px-4 pb-16 pt-12 sm:px-8 lg:grid-cols-[1.25fr_1fr]">
         <div>
-          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42 }} className="eyebrow text-wheat-fg">
+          <motion.div initial={{ y: 8 }} animate={{ y: 0 }} transition={{ duration: 0.42 }} className="eyebrow text-wheat-fg">
             {t("hero.eyebrow")}
           </motion.div>
           <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 12 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.42, delay: 0.06 }}
             className="mt-5 text-balance text-[clamp(2.7rem,6.2vw,5.6rem)] font-extrabold leading-[0.98]"
           >
             {t("hero.title")}
           </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.42, delay: 0.14 }} className="mt-7 max-w-2xl text-lg leading-relaxed text-dim sm:text-xl">
+          <motion.p initial={{ y: 6 }} animate={{ y: 0 }} transition={{ duration: 0.42, delay: 0.14 }} className="mt-7 max-w-2xl text-lg leading-relaxed text-dim sm:text-xl">
             {t("hero.subtitle")}
           </motion.p>
           <div className="mt-9 flex flex-wrap gap-3">
@@ -122,8 +122,8 @@ export function Hero() {
 
         {/* Ölçüm aleti paneli: canlı parsel + üç tanık */}
         <motion.aside
-          initial={{ opacity: 0, x: 14 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ x: 14 }}
+          animate={{ x: 0 }}
           transition={{ duration: 0.42, delay: 0.1 }}
           className="panel ticks relative p-5"
           aria-label="Canlı parsel paneli"

@@ -66,7 +66,11 @@ function webglAvailable(): boolean {
  * ve sayfa görünür + odaktayken yapılır: pencere bir an arkada kalınca tarayıcının kare hızını kısması 3D'yi kapatmaz.
  */
 function PerfProbe({ onStats, onLow, auto }: { onStats: (fps: number, tris: number, calls: number) => void; onLow: () => void; auto: boolean }) {
-  const { gl } = useThree();
+  const { gl, scene } = useThree();
+  // teşhis: npm run perf / geliştirici araçları sahneyi buradan sayar
+  useEffect(() => {
+    (window as unknown as { __agrishieldScene?: unknown }).__agrishieldScene = scene;
+  }, [scene]);
   const acc = useRef({ t: 0, frames: 0, warm: 0, lowFor: 0, checked: 0 });
   useFrame((_, dt) => {
     const a = acc.current;
@@ -83,6 +87,10 @@ function PerfProbe({ onStats, onLow, auto }: { onStats: (fps: number, tris: numb
     if (a.t >= 1) {
       const fps = a.frames / a.t;
       onStats(Math.round(fps), gl.info.render.triangles, gl.info.render.calls);
+      // fps günlüğü: `npm run perf` 3D sahnesini buradan ölçer (son 10 dk)
+      const w = window as unknown as { __agrishieldFps?: { t: number; fps: number; tris: number; calls: number }[] };
+      (w.__agrishieldFps ??= []).push({ t: Date.now(), fps: Math.round(fps * 10) / 10, tris: gl.info.render.triangles, calls: gl.info.render.calls });
+      if (w.__agrishieldFps.length > 600) w.__agrishieldFps.shift();
       const measurable = auto && document.visibilityState === "visible" && document.hasFocus() && a.checked < 20;
       if (measurable) {
         a.checked += a.t;
@@ -248,11 +256,16 @@ export function FieldSimulator({ stage = false, initialPreset = 1, liveSoil = fa
         onPointerMissed={() => setSelected(null)}
       >
         <fog attach="fog" args={["#8fa9a1", 220, 620]} />
-        <Environment live={live} night={layers.night} fade={fade} />
-        <Ground cut={layers.cut} fade={fade} />
-        <Roads fade={fade} cut={layers.cut} />
-        <Hills />
+        <group name="cevre">
+          <Environment live={live} night={layers.night} fade={fade} />
+          <Ground cut={layers.cut} fade={fade} />
+          <Roads fade={fade} cut={layers.cut} />
+          <Hills />
+        </group>
+        <group name="tarlalar">
         <Fields live={live} fade={fade} windOn={layers.wind} labels={layers.labels && showUi && (preset === 1 || preset === 4)} />
+        </group>
+        <group name="istasyon">
         <Station
           live={live}
           explode={layers.explode}
@@ -268,10 +281,19 @@ export function FieldSimulator({ stage = false, initialPreset = 1, liveSoil = fa
           farMarker={layers.labels && showUi && (preset === 1 || preset === 4 || preset === 6)}
           onZoom={() => goPreset(2)}
         />
+        </group>
+        <group name="koy">
         <Village live={live} dome={preset === 6} labels={layers.labels && showUi && (preset === 6 || preset === 1)} hover={hover} selected={selected} onHover={setHover} onSelect={setSelected} />
+        </group>
+        <group name="uydu">
         <Satellites live={live} labels={layers.labels && showUi && preset !== 2 && preset !== 3} hover={hover} selected={selected} onHover={setHover} onSelect={setSelected} />
-        <Clouds live={live} enabled={layers.clouds} />
-        <DataFlow live={live} visible={layers.flow} />
+        </group>
+        <group name="bulut">
+          <Clouds live={live} enabled={layers.clouds} />
+        </group>
+        <group name="akis">
+          <DataFlow live={live} visible={layers.flow} />
+        </group>
         <CameraRig preset={preset} presetNonce={nonce} autoRotate={stage || autoTour} reducedMotion={reduced} />
         <PerfProbe onStats={(fps, tris, calls) => setStats({ fps, tris, calls })} onLow={() => setFallback("düşük performans (fps < 30)")} auto={autoPerf} />
         <LabelProjector store={labelStore} />

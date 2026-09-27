@@ -74,14 +74,14 @@ export function ParcelView({
           </div>
           {p.story && <p className="mt-2 text-sm text-dim">{p.story}</p>}
         </div>
-        <nav aria-label="Senaryo" className="flex flex-wrap gap-1.5 rounded-xl border border-line bg-surface p-1">
+        <nav aria-label="Senaryo" className="grid w-full grid-cols-2 gap-1.5 rounded-xl border border-line bg-surface p-1 sm:flex sm:w-auto">
           {SCENARIO_KEYS.map((k) => (
             <Link
               key={k}
               href={`/parsel/${p.id}?senaryo=${k}`}
               scroll={false}
               onClick={() => setPicked(null)}
-              className={cn("rounded-lg px-3 py-1.5 text-sm", k === d.scenario.key ? "bg-wheat/15 font-semibold text-wheat-fg" : "text-dim hover:text-text")}
+              className={cn("rounded-lg px-3 py-1.5 text-center text-sm", k === d.scenario.key ? "bg-wheat/15 font-semibold text-wheat-fg" : "text-dim hover:text-text")}
             >
               {SCENARIOS[k].short}
             </Link>

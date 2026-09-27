@@ -6,7 +6,7 @@
 import { Line } from "@react-three/drei";
 import { Label3D } from "./labels";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { CLOUD_API_POS, GATEWAY_POS, STATION_POS, VILLAGE_POS } from "./layout";
 import type { SceneLive } from "./useSceneLive";
@@ -25,18 +25,44 @@ const HOUSES: [number, number, number, number][] = [
   [-40, -30, 0.25, 0.8],
 ];
 
-function House({ x, z, r, s }: { x: number; z: number; r: number; s: number }) {
+/** 10 ev → 2 çizim çağrısı (duvarlar + çatılar, InstancedMesh). */
+function Houses() {
+  const walls = useRef<THREE.InstancedMesh>(null);
+  const roofs = useRef<THREE.InstancedMesh>(null);
+  useLayoutEffect(() => {
+    const o = new THREE.Object3D();
+    const inner = new THREE.Object3D();
+    HOUSES.forEach(([x, z, r, s], i) => {
+      o.position.set(x, 0, z);
+      o.rotation.set(0, r, 0);
+      o.scale.setScalar(s);
+      o.updateMatrix();
+      inner.position.set(0, 1.6, 0);
+      inner.rotation.set(0, 0, 0);
+      inner.updateMatrix();
+      walls.current?.setMatrixAt(i, new THREE.Matrix4().multiplyMatrices(o.matrix, inner.matrix));
+      inner.position.set(0, 3.9, 0);
+      inner.rotation.set(0, Math.PI / 4, 0);
+      inner.updateMatrix();
+      roofs.current?.setMatrixAt(i, new THREE.Matrix4().multiplyMatrices(o.matrix, inner.matrix));
+    });
+    for (const m of [walls.current, roofs.current]) {
+      if (!m) continue;
+      m.instanceMatrix.needsUpdate = true;
+      m.computeBoundingSphere();
+    }
+  }, []);
   return (
-    <group position={[x, 0, z]} rotation-y={r} scale={s}>
-      <mesh position={[0, 1.6, 0]} castShadow receiveShadow>
+    <>
+      <instancedMesh ref={walls} args={[undefined, undefined, HOUSES.length]} castShadow receiveShadow>
         <boxGeometry args={[5, 3.2, 4]} />
         <meshStandardMaterial color="#cdbfa1" roughness={0.95} />
-      </mesh>
-      <mesh position={[0, 3.9, 0]} rotation-y={Math.PI / 4} castShadow>
+      </instancedMesh>
+      <instancedMesh ref={roofs} args={[undefined, undefined, HOUSES.length]} castShadow>
         <coneGeometry args={[3.7, 1.6, 4]} />
         <meshStandardMaterial color="#9a4e34" roughness={0.9} flatShading />
-      </mesh>
-    </group>
+      </instancedMesh>
+    </>
   );
 }
 
@@ -69,7 +95,8 @@ export function Village({
   );
   const pathPoints = useMemo(() => curve.getPoints(80), [curve]);
   const packet = useRef<THREE.Mesh>(null);
-  const trail = useRef<THREE.Mesh[]>([]);
+  const trail = useRef<THREE.InstancedMesh>(null);
+  const trailObj = useMemo(() => new THREE.Object3D(), []);
   const beam = useRef<THREE.MeshBasicMaterial>(null);
   const domeMat = useRef<THREE.MeshBasicMaterial>(null);
   const st = useRef({ t: 2, lastTick: 0, beam: 0, queued: false });
@@ -100,12 +127,20 @@ export function Village({
       packet.current.visible = on;
       if (on) packet.current.position.copy(curve.getPointAt(Math.min(1, s.t), tmp));
     }
-    trail.current.forEach((m, i) => {
-      if (!m) return;
-      const tt = s.t - (i + 1) * 0.035;
-      m.visible = on && tt > 0;
-      if (m.visible) m.position.copy(curve.getPointAt(Math.min(1, tt), tmp));
-    });
+    const tr = trail.current;
+    if (tr) {
+      tr.visible = on && s.t > 0.035;
+      if (tr.visible) {
+        for (let i = 0; i < 4; i++) {
+          const tt = Math.max(0, s.t - (i + 1) * 0.035);
+          trailObj.position.copy(curve.getPointAt(Math.min(1, tt), tmp));
+          trailObj.scale.setScalar(0.8 - i * 0.16);
+          trailObj.updateMatrix();
+          tr.setMatrixAt(i, trailObj.matrix);
+        }
+        tr.instanceMatrix.needsUpdate = true;
+      }
+    }
     s.beam = Math.max(0, s.beam - dt * 0.8);
     if (beam.current) beam.current.opacity = 0.08 + s.beam * 0.5;
     if (domeMat.current) domeMat.current.opacity = THREE.MathUtils.damp(domeMat.current.opacity, dome ? 0.07 : 0, 4, dt);
@@ -113,9 +148,7 @@ export function Village({
 
   return (
     <group>
-      {HOUSES.map(([x, z, r, s]) => (
-        <House key={`${x}${z}`} x={x} z={z} r={r} s={s} />
-      ))}
+      <Houses />
       {/* kooperatif binası */}
       <group position={VILLAGE_POS}>
         <mesh position={[0, 3.2, 0]} castShadow receiveShadow>
@@ -187,19 +220,10 @@ export function Village({
         <sphereGeometry args={[0.55, 12, 10]} />
         <meshBasicMaterial color="#9fd3ff" toneMapped={false} />
       </mesh>
-      {[0, 1, 2, 3].map((i) => (
-        <mesh
-          key={i}
-          ref={(m) => {
-            if (m) trail.current[i] = m;
-          }}
-          visible={false}
-          scale={0.8 - i * 0.16}
-        >
-          <sphereGeometry args={[0.5, 8, 6]} />
-          <meshBasicMaterial color="#4aa3e8" transparent opacity={0.55 - i * 0.12} depthWrite={false} />
-        </mesh>
-      ))}
+      <instancedMesh ref={trail} args={[undefined, undefined, 4]} visible={false} frustumCulled={false}>
+        <sphereGeometry args={[0.5, 8, 6]} />
+        <meshBasicMaterial color="#4aa3e8" transparent opacity={0.4} depthWrite={false} />
+      </instancedMesh>
       {/* gateway → bulut huzmesi */}
       <mesh position={[CLOUD_API_POS[0], (GATEWAY_POS[1] + CLOUD_API_POS[1]) / 2 + 1, CLOUD_API_POS[2]]}>
         <cylinderGeometry args={[0.35, 0.35, CLOUD_API_POS[1] - GATEWAY_POS[1], 10, 1, true]} />

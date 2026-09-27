@@ -24,6 +24,7 @@
     "perf": "tsx scripts/perf.ts",
     "qr": "tsx scripts/qr.ts",
     "device:emulate": "tsx scripts/device-emulator.ts",
+    "fonts": "tsx scripts/build-fonts.ts",
     "screens": "tsx scripts/screens.ts",
     "contract:compile": "tsx scripts/compile-contract.ts",
     "contract:deploy": "tsx scripts/deploy-amoy.ts"
@@ -56,6 +57,7 @@
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.186.0",
     "cross-env": "^10.1.0",
+    "lighthouse": "^12.8.2",
     "postcss": "^8.5.28",
     "prisma": "^6.19.3",
     "solc": "^0.8.28",

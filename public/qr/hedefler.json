@@ -1,0 +1,21 @@
+{
+  "base": "http://localhost:3000",
+  "generatedAt": "2026-09-26T20:29:36.795Z",
+  "targets": [
+    {
+      "file": "site",
+      "url": "http://localhost:3000/",
+      "label": "AgriShield"
+    },
+    {
+      "file": "kanit-7F3A",
+      "url": "http://localhost:3000/k/7F3A",
+      "label": "Örnek kanıt sayfası"
+    },
+    {
+      "file": "asistan",
+      "url": "http://localhost:3000/asistan",
+      "label": "AgriShield Asistanı"
+    }
+  ]
+}

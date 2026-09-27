@@ -9,6 +9,7 @@ import { Label3D } from "./labels";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { CUT, DEPTH_EXAG, STATION_POS, type V3 } from "./layout";
 import { STATION_HOTSPOTS } from "./hotspots";
 import type { SceneLive } from "./useSceneLive";
@@ -108,6 +109,29 @@ export function Station(p: StationProps) {
   const cable1 = useMemo(() => new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(0, 2.45, -0.2), new THREE.Vector3(0.06, 2.0, -0.06), new THREE.Vector3(0.06, 1.45, 0.06)]), 16, 0.008, 5), []);
   const cable2 = useMemo(() => new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(0.05, 1.2, 0.1), new THREE.Vector3(0.12, 0.6, 0.12), new THREE.Vector3(0.2, 0.02, 0.3)]), 16, 0.008, 5), []);
   const cable3 = useMemo(() => new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(-0.05, 1.22, 0.1), new THREE.Vector3(-0.15, 0.8, 0.1), new THREE.Vector3(-0.2, 0.6, 0.06)]), 12, 0.007, 5), []);
+  // Çizim çağrısı bütçesi (≤120): aynı malzemeli küçük parçalar tek geometride birleştirilir
+  const cables = useMemo(() => mergeGeometries([cable1, cable2, cable3])!, [cable1, cable2, cable3]);
+  const shield = useMemo(
+    () =>
+      mergeGeometries(
+        Array.from({ length: 6 }, (_, i) => new THREE.CylinderGeometry(0.07, 0.1, 0.024, 16, 1, true).translate(0, i * 0.036, 0)),
+      )!,
+    [],
+  );
+  const cupArms = useMemo(
+    () =>
+      mergeGeometries(
+        [0, 1, 2].map((i) => new THREE.CylinderGeometry(0.005, 0.005, 0.14, 5).rotateZ(Math.PI / 2).translate(0.07, 0, 0).rotateY((i * Math.PI * 2) / 3)),
+      )!,
+    [],
+  );
+  const cupShells = useMemo(
+    () =>
+      mergeGeometries(
+        [0, 1, 2].map((i) => new THREE.SphereGeometry(0.035, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2).rotateX(Math.PI / 2).translate(0.14, 0, 0).rotateY((i * Math.PI * 2) / 3)),
+      )!,
+    [],
+  );
 
   useFrame((st, dt) => {
     const l = live.current;
@@ -190,7 +214,7 @@ export function Station(p: StationProps) {
   return (
     <group position={STATION_POS}>
       {/* temel */}
-      <mesh position={[0, 0.06, 0]} castShadow receiveShadow>
+      <mesh position={[0, 0.06, 0]} receiveShadow>
         <cylinderGeometry args={[0.18, 0.2, 0.12, 16]} />
         <meshStandardMaterial color="#8c8a82" roughness={0.9} />
       </mesh>
@@ -266,7 +290,7 @@ export function Station(p: StationProps) {
               <cylinderGeometry args={[0.012, 0.012, 0.62, 6]} />
               <meshStandardMaterial color={ALU} />
             </mesh>
-            <mesh position={[0, 0.16, 0]} castShadow>
+            <mesh position={[0, 0.16, 0]}>
               <cylinderGeometry args={[0.1, 0.055, 0.12, 20, 1, true]} />
               <meshStandardMaterial {...std("#dfe3dd", hl, { side: THREE.DoubleSide })} />
             </mesh>
@@ -308,21 +332,12 @@ export function Station(p: StationProps) {
               <meshStandardMaterial color={ALU} />
             </mesh>
             <group ref={cups} position={[0, 0.14, 0]}>
-              {[0, 1, 2].map((i) => {
-                const a = (i * Math.PI * 2) / 3;
-                return (
-                  <group key={i} rotation-y={a}>
-                    <mesh position={[0.07, 0, 0]} rotation-z={Math.PI / 2}>
-                      <cylinderGeometry args={[0.005, 0.005, 0.14, 5]} />
-                      <meshStandardMaterial {...std(ALU, hl)} />
-                    </mesh>
-                    <mesh position={[0.14, 0, 0]} rotation-x={Math.PI / 2}>
-                      <sphereGeometry args={[0.035, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2]} />
-                      <meshStandardMaterial {...std("#f2f7f3", hl, { side: THREE.DoubleSide })} />
-                    </mesh>
-                  </group>
-                );
-              })}
+              <mesh geometry={cupArms}>
+                <meshStandardMaterial {...std(ALU, hl)} />
+              </mesh>
+              <mesh geometry={cupShells}>
+                <meshStandardMaterial {...std("#f2f7f3", hl, { side: THREE.DoubleSide })} />
+              </mesh>
             </group>
           </group>
         )}
@@ -336,12 +351,9 @@ export function Station(p: StationProps) {
               <cylinderGeometry args={[0.012, 0.012, 0.62, 6]} />
               <meshStandardMaterial color={ALU} />
             </mesh>
-            {Array.from({ length: 6 }, (_, i) => (
-              <mesh key={i} position={[0, i * 0.036, 0]} castShadow>
-                <cylinderGeometry args={[0.07, 0.1, 0.024, 16, 1, true]} />
-                <meshStandardMaterial {...std("#f4f5f0", hl, { side: THREE.DoubleSide })} />
-              </mesh>
-            ))}
+            <mesh geometry={shield} castShadow>
+              <meshStandardMaterial {...std("#f4f5f0", hl, { side: THREE.DoubleSide })} />
+            </mesh>
             <Label3D id="temp" position={[0.16, 0.12, 0]} distanceFactor={6} z={20} interactive>
               <div className={p.labels && p.showHotspots ? `pointer-events-none whitespace-nowrap rounded bg-bg/85 px-1.5 py-0.5 font-mono text-[11px] ${tempLabel.hot ? "text-red-fg" : "text-text"}` : "hidden"}>{tempLabel.t} °C</div>
             </Label3D>
@@ -358,11 +370,11 @@ export function Station(p: StationProps) {
               <meshStandardMaterial {...std("#d8dcd6", hl)} />
             </mesh>
             {/* kartlar (kapak açılınca görünür) */}
-            <mesh position={[-0.035, 0.01, 0.03]}>
+            <mesh position={[-0.035, 0.01, 0.03]} visible={e > 0.02}>
               <boxGeometry args={[0.1, 0.07, 0.006]} />
               <meshStandardMaterial color="#2f9e6b" emissive="#2f9e6b" emissiveIntensity={0.15} />
             </mesh>
-            <mesh position={[0.055, -0.03, 0.028]}>
+            <mesh position={[0.055, -0.03, 0.028]} visible={e > 0.02}>
               <boxGeometry args={[0.07, 0.05, 0.02]} />
               <meshStandardMaterial color="#e0a526" />
             </mesh>
@@ -402,7 +414,7 @@ export function Station(p: StationProps) {
       <Part {...h("H10")}>
         {(hl) => (
           <group>
-            <mesh position={[-0.2, 0.55, 0.06]} castShadow>
+            <mesh position={[-0.2, 0.55, 0.06]}>
               <boxGeometry args={[0.12, 0.08, 0.06]} />
               <meshStandardMaterial {...std("#39413c", hl)} />
             </mesh>
@@ -414,13 +426,7 @@ export function Station(p: StationProps) {
               <boxGeometry args={[0.1, 0.014, 0.002]} />
               <meshBasicMaterial color="#2f9e6b" />
             </mesh>
-            <mesh geometry={cable1}>
-              <meshStandardMaterial {...std("#1d1f1e", hl)} />
-            </mesh>
-            <mesh geometry={cable2}>
-              <meshStandardMaterial {...std("#1d1f1e", hl)} />
-            </mesh>
-            <mesh geometry={cable3}>
+            <mesh geometry={cables}>
               <meshStandardMaterial {...std("#1d1f1e", hl)} />
             </mesh>
           </group>
@@ -434,9 +440,9 @@ export function Station(p: StationProps) {
         const to: V3 = [base[0] + o[0], base[1] + o[1], base[2] + o[2]];
         return (
           <group key={x.id}>
-            <Line points={[base, to]} color="#c9d6ce" lineWidth={1} dashed dashSize={0.04} gapSize={0.03} transparent opacity={e > 0.25 ? 0.8 : 0} />
+            <Line points={[base, to]} visible={e > 0.02} color="#c9d6ce" lineWidth={1} dashed dashSize={0.04} gapSize={0.03} transparent opacity={e > 0.25 ? 0.8 : 0} />
             <Label3D id={`exp-${x.id}`} position={to} distanceFactor={7} z={20} interactive>
-              <div className={e > 0.25 ? "pointer-events-none whitespace-nowrap font-mono text-[11px] uppercase tracking-wider text-chain-fg" : "hidden"}>
+              <div className={e > 0.25 && p.showHotspots ? "pointer-events-none -translate-y-[14px] translate-x-[calc(50%+16px)] whitespace-nowrap rounded bg-bg/70 px-1 font-mono text-[11px] uppercase tracking-wider text-chain-fg" : "hidden"}>
                 {x.id} · {x.name}
               </div>
             </Label3D>
