@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start -p 3000",
     "stage": "cross-env OFFLINE=1 CHAIN_MODE=mock AI_MODE=local NEXT_PUBLIC_STAGE_MODE=1 next start -p 3000",
-    "setup": "npm run db:generate && prisma migrate deploy && npm run seed",
+    "setup": "tsx scripts/setup.ts",
     "db:generate": "tsx scripts/prisma-generate.ts",
     "seed": "tsx scripts/seed.ts",
     "data:generate": "tsx scripts/generate-data.ts",
@@ -65,5 +65,8 @@
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=20.12"
   }
 }

@@ -25,7 +25,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={cn("snap-section relative border-t border-line py-20 sm:py-24", className)}>
+    <section id={id} aria-labelledby={`${id}-title`} className={cn("snap-section lazy-render relative border-t border-line py-20 sm:py-24", className)}>
       <div className="mx-auto max-w-[1360px] px-4 sm:px-8">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-3xl">

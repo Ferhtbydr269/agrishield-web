@@ -5,6 +5,7 @@ import { FACTS } from "@/content/facts";
 import { rain30Normal, spi30 } from "@/engine/climate";
 import { price } from "@/engine/pricing";
 import { gammaP, normInv } from "@/engine/stats";
+import { riskScore, shouldWarn } from "@/engine/model";
 import { askLocal, normalizeTr } from "@/server/ai";
 
 describe("Fiyatlama (8.6) — rehberdeki örnekle birebir", () => {
@@ -62,5 +63,29 @@ describe("Asistan (yerel mod)", () => {
   it("bilinmeyen soru → doğrulanmış bilgi yok cevabı", () => {
     const r = askLocal("Mars'ta buğday yetişir mi kuantum?");
     expect(r.answer).toMatch(/doğrulanmış bilgimiz yok/);
+  });
+});
+
+describe("Hakem modeli (açıklanabilir lojistik skor)", () => {
+  const base = { rainRatio: 0.9, ndviAnomaly: -0.02, soilMoisture: 30, soilThreshold: 18, spi30: 0.2, phenologyWeight: 1 };
+  it("kuraklık belirtileri arttıkça risk skoru artar, 0–1 aralığında kalır", () => {
+    const calm = riskScore(base).riskScore;
+    const dry = riskScore({ ...base, rainRatio: 0.1, ndviAnomaly: -0.35, soilMoisture: 12, spi30: -2 }).riskScore;
+    expect(calm).toBeGreaterThanOrEqual(0);
+    expect(dry).toBeLessThanOrEqual(1);
+    expect(dry).toBeGreaterThan(calm);
+    expect(dry).toBeGreaterThan(0.6);
+  });
+  it("en etkili en fazla 3 faktör, büyükten küçüğe", () => {
+    const f = riskScore({ ...base, rainRatio: 0.1, ndviAnomaly: -0.35, soilMoisture: 12, spi30: -2 }).topFactors;
+    expect(f.length).toBeLessThanOrEqual(3);
+    for (let i = 1; i < f.length; i++) expect(f[i - 1][1]).toBeGreaterThanOrEqual(f[i][1]);
+  });
+  it("erken uyarı yalnız kritik dönemde (ağırlık ≥ 0,8), bir kez ve karardan önce", () => {
+    expect(shouldWarn(0.7, 1, false, false)).toBe(true);
+    expect(shouldWarn(0.7, 0.4, false, false)).toBe(false);
+    expect(shouldWarn(0.7, 1, true, false)).toBe(false);
+    expect(shouldWarn(0.7, 1, false, true)).toBe(false);
+    expect(shouldWarn(0.5, 1, false, false)).toBe(false);
   });
 });
