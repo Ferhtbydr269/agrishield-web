@@ -5,10 +5,8 @@ import { cn, fmtNum } from "@/components/ui/cn";
 
 const pct = (x: number | null) => (x == null ? "—" : `${x < 0 ? "−" : "+"}%${fmtNum(Math.abs(x) * 100, 1)}`);
 
-/** Üç tanık: karar + ölçülen değer + eşik + gerekçe (motorun kendi açıklaması) */
-export function WitnessPanel({ w, stage = false, compact = false }: { w: Witnesses | null | undefined; stage?: boolean; compact?: boolean }) {
-  const size = stage ? "lg" : "md";
-  if (!w) return <div className="grid gap-3">{[0, 1, 2].map((i) => <div key={i} className="h-16 animate-pulse rounded-xl bg-surface-2" />)}</div>;
+/** Üç tanığın ekrana yazılan satırları: karar + ölçülen değer + eşik + kaynak + gerekçe (sunum sahneleri de kullanır) */
+export function witnessRows(w: Witnesses) {
   const s = w.satellite;
   const st = w.station;
   const m = w.meteo;
@@ -40,6 +38,14 @@ export function WitnessPanel({ w, stage = false, compact = false }: { w: Witness
       meta: `${m.source} · normal: ERA5 1991–2020 (gerçek)`,
     },
   ];
+  return rows;
+}
+
+/** Üç tanık: karar + ölçülen değer + eşik + gerekçe (motorun kendi açıklaması) */
+export function WitnessPanel({ w, stage = false, compact = false }: { w: Witnesses | null | undefined; stage?: boolean; compact?: boolean }) {
+  const size = stage ? "lg" : "md";
+  if (!w) return <div className="grid gap-3">{[0, 1, 2].map((i) => <div key={i} className="h-16 animate-pulse rounded-xl bg-surface-2" />)}</div>;
+  const rows = witnessRows(w);
   return (
     <div className="grid gap-3" data-testid="witness-panel">
       {rows.map((r) => (

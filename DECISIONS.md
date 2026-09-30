@@ -43,8 +43,13 @@ gerekçesiyle. Çelişkide iş emri esastır; buradaki sapmalar dürüstlük, sa
 
 13. **3D sahnesinde kamera Shift+1–6.** Düz rakamlar sunumda sahne değiştirir (iş emri 13.1); ikisi çakışmasın diye
     sahne 4'te kamera Shift ile. Sahne 4 kendiliğinden preset 1 → 2 geçer.
-14. **Sunum alanı alttaki 148 px'i ipucu şeridi ve 15:00 sayaç için ayırır**; tüm sahneler 1920×1080'de taşmasız
-    (`npm run screens` her sahneyi fotoğraflayıp yatay taşma ve sayfa hatası denetler).
+14. **Sunum ve kiosk sabit 1920×1080 bir tuvalde tasarlanır ve ekrana orantılı sığdırılır** (`StageCanvas`, slayt
+    yazılımı gibi; en-boy oranı farklıysa kenarda koyu boşluk). İlk sürüm akışkan düzendi: tarayıcı çubukları açıkken
+    (~1900×920) ya da dizüstünde başlıklar taşıyor, 3D paneli küçülüp üst üste biniyordu. Artık tipografi sabit piksel
+    ölçeğinde (başlık 64–96 · gövde 22–30 · en küçük 15–18 px), içerik alanı 1728×790 px; alt şerit ipucu ve 15:00
+    sayaca ayrılmıştır. 3D Canvas boyutu dönüşümsüz ölçülür (`resize.offsetSize`), çift ölçek ve tıklama kayması olmaz.
+    Sunucu sahne sırasında yeniden başlarsa sunum 1. sahneye düşmez: ekran kendi sahnesini sunucuya geri yükler.
+    `npm run screens -- --boyut 1905x920` farklı ekran boyutlarında tüm sahneleri fotoğraflayıp denetler.
 15. **drei `<Html>` yerine kendi 3D etiket katmanı** (`src/scene3d/labels.tsx`): React 19'da iç içe kök söküm hatası
     ("synchronously unmount a root" + removeChild) sahne geçişlerinde 3D'yi çökertiyordu.
 16. **Vurgu: drei `Outlines` yerine emissive.** Performans ve çizim çağrısı bütçesi için.

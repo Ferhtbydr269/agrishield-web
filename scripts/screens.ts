@@ -15,9 +15,10 @@ const argv = process.argv.slice(2);
 const i = argv.indexOf("--url");
 const BASE = (i >= 0 ? argv[i + 1] : "http://localhost:3000").replace(/\/$/, "");
 const VIDEO = argv.includes("--video");
-const OUT = path.join(process.cwd(), "public", "yedek");
-const W = 1920;
-const H = 1080;
+// --boyut 1905x920: tarayıcı içi (adres çubuğu açık) gibi farklı ekranlarda sunum düzenini denetlemek için
+const sizeArg = argv[argv.indexOf("--boyut") + 1];
+const [W, H] = argv.includes("--boyut") && /^\d+x\d+$/.test(sizeArg ?? "") ? sizeArg.split("x").map(Number) : [1920, 1080];
+const OUT = argv.includes("--cikis") ? path.resolve(argv[argv.indexOf("--cikis") + 1]) : path.join(process.cwd(), "public", "yedek");
 
 interface Shot {
   file: string;

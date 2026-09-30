@@ -1,6 +1,6 @@
 "use client";
 /**
- * KIOSK / STANT MODU (/?kiosk=1) — 90 sn'lik döngü:
+ * KIOSK / STANT MODU (/?kiosk=1) — 90 sn'lik döngü, sunumla aynı 1920×1080 tuvalde (her ekrana orantılı sığar):
  *   3D tur (25 sn) → zaman makinesi hızlandırılmış kuraklık (25 sn) → karar + ödeme (20 sn) → QR ve "Asistana sor" (20 sn)
  * Herhangi bir tıklama/tuş döngüyü durdurur.
  */
@@ -12,14 +12,15 @@ import { focusParcel, useLive } from "@/store/sim";
 import { QR, useOrigin } from "@/components/ui/QR";
 import { LogoMark } from "@/components/brand/Logo";
 import { SampleDataBadge } from "@/components/ui/Badges";
-import { PaymentCard } from "@/components/ui/PaymentCard";
 import { PhoneMock } from "@/components/ui/PhoneMock";
 import { VoteRing } from "@/components/ui/VoteRing";
 import { NDVIChart, NDVILegend } from "@/components/ui/NDVIChart";
-import { WitnessPanel } from "@/components/demo/WitnessPanel";
+import { witnessRows } from "@/components/demo/WitnessPanel";
 import { useFocusSeries } from "@/components/demo/useFocusSeries";
 import { formatDateTR } from "@/lib/dates";
 import { SEASON } from "@/sim/scenarios";
+import { StageCanvas } from "./StageCanvas";
+import { StagePayment, StageWitness } from "./stage-kit";
 
 const FieldSimulator = dynamic(() => import("@/scene3d/FieldSimulator").then((m) => m.FieldSimulator), { ssr: false });
 
@@ -80,71 +81,82 @@ export function KioskLoop({ onExit }: { onExit: () => void }) {
   }, [step, cycle]);
 
   const s = STEPS[step];
+  const rows = f ? witnessRows(f.witnesses) : null;
   return (
-    <div className="fixed inset-0 z-[70] flex flex-col bg-bg" data-theme="dark" data-testid="kiosk">
-      <div className="flex items-center gap-4 px-10 pt-6">
-        <LogoMark size={34} />
-        <span className="font-display text-3xl font-extrabold">AgriShield</span>
-        <span className="ml-4 text-2xl text-dim">{s.title}</span>
-        <div className="ml-auto flex items-center gap-3">
-          <SampleDataBadge />
-          <span className="font-mono text-sm text-dim">dokunun → keşfedin</span>
+    <StageCanvas testId="kiosk" label="AgriShield stant döngüsü">
+      {/* üst */}
+      <div className="absolute left-[72px] right-[72px] top-[36px] flex items-center gap-6">
+        <LogoMark size={52} />
+        <span className="font-display text-[44px] font-extrabold">AgriShield</span>
+        <span className="ml-4 text-[34px] text-dim">{s.title}</span>
+        <div className="ml-auto flex items-center gap-4">
+          <SampleDataBadge className="!px-4 !py-1.5 !text-[16px]" />
+          <span className="font-mono text-[20px] text-dim">dokunun → keşfedin</span>
         </div>
       </div>
-      <div className="mx-10 mt-4 grid grid-cols-4 gap-2">
+      <div className="absolute left-[72px] right-[72px] top-[118px] grid grid-cols-4 gap-3">
         {STEPS.map((x, i) => (
-          <div key={x.key} className="h-1.5 overflow-hidden rounded-full bg-line">
+          <div key={x.key} className="h-2.5 overflow-hidden rounded-full bg-line">
             {i === step && <div key={`${cycle}-${i}`} className="h-full bg-wheat" style={{ animation: `kiosk-fill ${x.sec}s linear forwards` }} />}
             {i < step && <div className="h-full bg-green" />}
           </div>
         ))}
       </div>
       <style>{`@keyframes kiosk-fill { from { width: 0 } to { width: 100% } }`}</style>
-      <div className="min-h-0 flex-1 p-10">
+
+      {/* gövde: 1776×856 */}
+      <div className="absolute bottom-[72px] left-[72px] right-[72px] top-[168px]">
         {s.key === "tur" && (
-          <div className="h-full overflow-hidden rounded-2xl border border-line">
+          <div className="h-full overflow-hidden rounded-3xl border border-line">
             <FieldSimulator stage autoTour height="100%" />
           </div>
         )}
         {s.key === "zaman" && (
-          <div className="grid h-full grid-cols-[1.6fr_1fr] gap-8">
-            <div className="panel p-6">
-              <div className="font-display text-6xl font-extrabold">{sim ? formatDateTR(sim.date) : "—"}</div>
-              {series && sim && <NDVIChart obs={series.obs} normals={series.normals} crop={series.crop} seasonStart={SEASON.start} seasonEnd={SEASON.end} from="2026-02-01" to="2026-06-15" cursor={sim.date} stage height={400} />}
+          <div className="grid h-full grid-cols-[1fr_700px] gap-10">
+            <div className="panel flex min-h-0 flex-col px-9 py-7">
+              <div className="font-display text-[88px] font-extrabold leading-none">{sim ? formatDateTR(sim.date, { year: true }) : "—"}</div>
+              <div className="mt-4 min-h-0 flex-1">
+                {series && sim && <NDVIChart obs={series.obs} normals={series.normals} crop={series.crop} seasonStart={SEASON.start} seasonEnd={SEASON.end} from="2026-02-01" to="2026-06-15" cursor={sim.date} stage height={430} />}
+              </div>
               <NDVILegend stage />
             </div>
-            <WitnessPanel w={f?.witnesses} stage compact />
+            <div className="grid content-center gap-5">
+              {rows ? rows.map((r) => <StageWitness key={r.kind} kind={r.kind} verdict={r.verdict} detail={r.detail} size="md" />) : null}
+            </div>
           </div>
         )}
         {s.key === "karar" && (
-          <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-12">
-            <VoteRing verdicts={f ? { satellite: f.witnesses.satellite.verdict, station: f.witnesses.station.verdict, meteo: f.witnesses.meteo.verdict } : { satellite: null, station: null, meteo: null }} outcome={f?.decision?.outcome ?? null} size={460} />
-            {f?.decision?.outcome === "ODE" ? <PaymentCard payment={payments[f.decision.code] ?? null} amountTl={f.decision.amountTl} stage /> : <div className="text-3xl text-dim">Karar bekleniyor…</div>}
-            <PhoneMock messages={sms} stage />
+          <div className="grid h-full grid-cols-[500px_1fr_400px] items-center gap-12">
+            <VoteRing verdicts={f ? { satellite: f.witnesses.satellite.verdict, station: f.witnesses.station.verdict, meteo: f.witnesses.meteo.verdict } : { satellite: null, station: null, meteo: null }} outcome={f?.decision?.outcome ?? null} size={500} />
+            <div className="h-[640px]">
+              {f?.decision?.outcome === "ODE" ? (
+                <StagePayment payment={payments[f.decision.code] ?? null} amountTl={f.decision.amountTl} />
+              ) : (
+                <div className="panel grid h-full place-items-center text-[34px] text-dim">Karar bekleniyor…</div>
+              )}
+            </div>
+            <PhoneMock messages={sms} stage screenHeight={560} />
           </div>
         )}
         {s.key === "qr" && (
           <div className="grid h-full grid-cols-3 items-center gap-12 text-center">
-            <div className="flex flex-col items-center gap-5">
-              {origin && <QR value={`${origin}/k/7F3A`} size={300} />}
-              <div className="text-3xl font-bold">Kanıt sayfası</div>
-              <div className="text-xl text-dim">Bir kararın tüm delili. Hash'i kendiniz doğrulayın.</div>
-            </div>
-            <div className="flex flex-col items-center gap-5">
-              {origin && <QR value={`${origin}/asistan`} size={300} />}
-              <div className="flex items-center gap-2 text-3xl font-bold">
-                <MessageCircleQuestion className="size-8 text-violet-fg" aria-hidden /> Asistana sor
+            {[
+              { url: origin ? `${origin}/k/7F3A` : "", title: "Kanıt sayfası", sub: "Bir kararın tüm delili. Hash'i kendiniz doğrulayın.", icon: false },
+              { url: origin ? `${origin}/asistan` : "", title: "Asistana sor", sub: "“Neden blokzincir?” · “Basis risk nedir?”", icon: true },
+              { url: origin, title: "AgriShield", sub: "Kuraklık Nisan'da olur. Para da Nisan'da gelmeli.", icon: false },
+            ].map((q) => (
+              <div key={q.title} className="flex flex-col items-center gap-6">
+                {q.url && <QR value={q.url} size={340} />}
+                <div className="flex items-center gap-3 text-[44px] font-bold">
+                  {q.icon && <MessageCircleQuestion className="size-11 text-violet-fg" aria-hidden />}
+                  {q.title}
+                </div>
+                <div className="max-w-[500px] text-[26px] leading-snug text-dim">{q.sub}</div>
               </div>
-              <div className="text-xl text-dim">"Neden blokzincir?" · "Basis risk nedir?"</div>
-            </div>
-            <div className="flex flex-col items-center gap-5">
-              {origin && <QR value={origin} size={300} />}
-              <div className="text-3xl font-bold">AgriShield</div>
-              <div className="text-xl text-dim">Kuraklık Nisan'da olur. Para da Nisan'da gelmeli.</div>
-            </div>
+            ))}
           </div>
         )}
       </div>
-    </div>
+    </StageCanvas>
   );
 }

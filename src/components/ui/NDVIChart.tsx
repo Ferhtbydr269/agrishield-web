@@ -74,7 +74,7 @@ export function NDVIChart({ obs, normals, crop, seasonStart, seasonEnd, cursor, 
 
   const clearObs = obs.filter((o) => o.ndvi != null && inRange(o.date) && (!cursor || o.date <= cursor));
   const last = clearObs[clearObs.length - 1];
-  const fs = stage ? 15 : 11;
+  const fs = stage ? 17 : 11;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="NDVI grafiği: normal aralık, bu yıl ve eşik">

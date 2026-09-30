@@ -91,7 +91,7 @@ export function VoteRing({
           })}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <div className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-dim">EVET</div>
+        <div className="font-mono uppercase tracking-[0.14em] text-dim" style={{ fontSize: Math.max(11, Math.round(size * 0.036)) }}>EVET</div>
         <div className="font-display text-5xl font-extrabold leading-none tabular text-text" style={{ fontSize: size * 0.2 }}>
           {yes}
           <span className="text-dim">/3</span>

@@ -41,6 +41,12 @@ export const usePresentation = create<PresentationStore>((set, get) => ({
   reloadNonce: null,
   applyRemote: (s) => {
     const st = get();
+    // Sunucu yeniden başladıysa (hiç güncellenmemiş varsayılan durum) sunum sürerken 1. sahneye düşmeyiz:
+    // bu ekranın sahnesi sunucuya geri yüklenir, diğer ekranlar SSE ile yeniden eşitlenir.
+    if (s.origin === "server" && !s.present && st.present) {
+      send({ index: st.index, present: true, blackout: st.blackout });
+      return;
+    }
     // /sunucu "sahneyi yeniden yükle": ana ekran kendini yeniler (sunucu ekranı değil)
     if (st.reloadNonce != null && s.reloadNonce > st.reloadNonce && typeof window !== "undefined" && window.location.pathname === "/") {
       window.location.reload();

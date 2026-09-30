@@ -75,8 +75,8 @@ export function Label3D({
   return <object3D ref={ref} position={position} />;
 }
 
-/** Sahne içinde: her karede etiketleri ekrana projekte eder */
-export function LabelProjector({ store }: { store: LabelStore }) {
+/** Sahne içinde: her karede etiketleri ekrana projekte eder. boost: sunum tuvalinde etiketleri büyütür */
+export function LabelProjector({ store, boost = 1 }: { store: LabelStore; boost?: number }) {
   const { camera, size } = useThree();
   const v = useRef(new THREE.Vector3());
   const cam = useRef(new THREE.Vector3());
@@ -102,7 +102,7 @@ export function LabelProjector({ store }: { store: LabelStore }) {
       }
       const x = ((v.current.x + 1) / 2) * size.width;
       const y = ((1 - v.current.y) / 2) * size.height;
-      const scale = s.distanceFactor ? Math.min(3, Math.max(0.35, s.distanceFactor / (k * dist))) : 1;
+      const scale = Math.min(3, (s.distanceFactor ? Math.min(3, Math.max(0.35, s.distanceFactor / (k * dist))) : 1) * boost);
       el.style.display = "block";
       el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%) scale(${scale.toFixed(3)})`;
       el.style.zIndex = String(s.z ?? 10);

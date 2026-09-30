@@ -19,6 +19,7 @@ import { cn } from "@/components/ui/cn";
 import type { SeasonPoint } from "@/components/ui/Era5Chart";
 import type { BacktestSeason } from "@/components/sections/Commercial";
 import { StageTimer } from "./StageTimer";
+import { StageCanvas } from "./StageCanvas";
 import { KioskLoop } from "./KioskLoop";
 import {
   SceneCommercial,
@@ -207,63 +208,48 @@ export function Presentation({ children, backtestP }: { children: React.ReactNod
     <>
       {children}
       {kiosk && !present && <KioskLoop onExit={() => setKiosk(false)} />}
-      <AnimatePresence>
-        {present && (
-          <motion.div
-            key="stage"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22 }}
-            className="fixed inset-0 z-[80] flex flex-col bg-bg"
-            data-theme="dark"
-            role="dialog"
-            aria-label={`Sunum modu — sahne ${SCENES[index].key}: ${SCENES[index].title}`}
-            data-testid="presentation"
-          >
-            {/* ilerleme şeridi */}
-            <div className="flex items-center gap-4 px-10 pt-5">
-              <LogoMark size={30} />
-              <div className="grid flex-1 grid-cols-10 gap-1.5">
-                {SCENES.map((s, i) => (
-                  <button key={s.key} type="button" onClick={() => setScene(i)} className="group text-left" aria-label={`Sahne ${s.key}: ${s.title}`}>
-                    <div className={cn("h-1.5 rounded-full transition-colors", i < index ? "bg-green" : i === index ? "bg-wheat" : "bg-line")} />
-                    <div className={cn("mt-1 truncate font-mono text-[13px]", i === index ? "text-text" : "text-dim")}>
-                      {s.key} · {s.title}
-                    </div>
-                  </button>
-                ))}
-              </div>
-              <span className="font-mono text-[15px] text-dim">
-                {index + 1}/10
-              </span>
-              <button type="button" onClick={() => togglePresent(false)} className="grid size-9 place-items-center rounded-full border border-line text-dim hover:text-text" aria-label="Sunum modundan çık (Esc)">
-                <X className="size-4" aria-hidden />
-              </button>
+      {present && (
+        <StageCanvas testId="presentation" label={`Sunum modu — sahne ${SCENES[index].key}: ${SCENES[index].title}`}>
+          {/* üst: ilerleme şeridi (1920×1080 tuvalde sabit ölçü) */}
+          <div className="absolute left-[72px] right-[72px] top-[34px] flex items-center gap-7">
+            <LogoMark size={44} />
+            <div className="grid flex-1 grid-cols-10 gap-2.5">
+              {SCENES.map((s, i) => (
+                <button key={s.key} type="button" onClick={() => setScene(i)} className="min-w-0 text-left" aria-label={`Sahne ${s.key}: ${s.title}`}>
+                  <div className={cn("h-2 rounded-full transition-colors", i < index ? "bg-green" : i === index ? "bg-wheat" : "bg-line")} />
+                  <div className={cn("mt-2 truncate font-mono text-[17px]", i === index ? "font-semibold text-text" : "text-dim")}>
+                    {s.key} · {s.title}
+                  </div>
+                </button>
+              ))}
             </div>
-            {/* sahne */}
-            <div className="relative min-h-0 flex-1 px-14 pb-[148px] pt-7">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.42, ease: [0.2, 0.8, 0.2, 1] }}
-                  className="h-full"
-                >
-                  <ErrorBoundary label={SCENES[index].title}>{scene}</ErrorBoundary>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            {/* alt: ipucu + süre */}
-            <div className="pointer-events-none absolute bottom-6 left-14 max-w-[900px] font-mono text-[15px] text-dim">P çık · 1–0 sahne · ←/→ · Space zaman · R sıfırla · B karart</div>
-            <div className="absolute bottom-5 right-8">
-              <StageTimer startedAt={startedAt} sceneIndex={index} sceneStartedAt={sceneStartedAt} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <span className="font-mono text-[22px] text-dim">{index + 1}/10</span>
+            <button type="button" onClick={() => togglePresent(false)} className="grid size-12 place-items-center rounded-full border border-line text-dim hover:text-text" aria-label="Sunum modundan çık (Esc)">
+              <X className="size-6" aria-hidden />
+            </button>
+          </div>
+          {/* sahne: 1728×804 içerik alanı */}
+          <div className="absolute bottom-[150px] left-[96px] right-[96px] top-[140px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.38, ease: [0.2, 0.8, 0.2, 1] }}
+                className="h-full"
+              >
+                <ErrorBoundary label={SCENES[index].title}>{scene}</ErrorBoundary>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          {/* alt: sunucu ipucu (sol) + süre (sağ) */}
+          <div className="pointer-events-none absolute bottom-[46px] left-[96px] font-mono text-[19px] text-dim">P çık · 1–0 sahne · ←/→ · Space zaman · R sıfırla · B karart</div>
+          <div className="absolute bottom-[22px] right-[72px]">
+            <StageTimer startedAt={startedAt} sceneIndex={index} sceneStartedAt={sceneStartedAt} variant="stage" />
+          </div>
+        </StageCanvas>
+      )}
       {blackout && <div className="blackout" aria-hidden onClick={toggleBlackout} />}
     </>
   );

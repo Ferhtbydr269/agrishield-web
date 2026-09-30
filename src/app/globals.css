@@ -275,10 +275,13 @@ h3,
 }
 
 /* sunum modu: kaydırma yok, dev tipografi */
-:root[data-present="1"] {
-  font-size: 22px;
+/* sunum / kiosk tuvali (StageCanvas): 1920×1080 tasarım + orantılı ölçek. Kök yazı boyutu sabit → rem kullanan
+   ortak bileşenler de her ekranda aynı ölçüde; sayfa kaymaz */
+:root[data-stage="1"] {
+  font-size: 20px;
   overflow: hidden;
 }
+:root[data-stage="1"] body,
 :root[data-present="1"] body {
   overflow: hidden;
 }

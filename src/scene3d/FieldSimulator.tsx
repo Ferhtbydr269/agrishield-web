@@ -245,6 +245,8 @@ export function FieldSimulator({ stage = false, initialPreset = 1, liveSoil = fa
       <LabelProvider store={labelStore}>
       <div className={perfFallback ? "hidden" : "absolute inset-0"}>
       <Canvas
+        // offsetSize: sunum tuvali CSS ile ölçeklenir; boyut dönüşümsüz (yerel) ölçülür → çift ölçek ve tıklama kayması olmaz
+        resize={{ offsetSize: true }}
         dpr={[1, 1.5]}
         shadows="percentage"
         frameloop={visible && !perfFallback ? "always" : "never"}
@@ -296,13 +298,29 @@ export function FieldSimulator({ stage = false, initialPreset = 1, liveSoil = fa
         </group>
         <CameraRig preset={preset} presetNonce={nonce} autoRotate={stage || autoTour} reducedMotion={reduced} />
         <PerfProbe onStats={(fps, tris, calls) => setStats({ fps, tris, calls })} onLow={() => setFallback("düşük performans (fps < 30)")} auto={autoPerf} />
-        <LabelProjector store={labelStore} />
+        <LabelProjector store={labelStore} boost={stage ? 1.45 : 1} />
       </Canvas>
       </div>
       </LabelProvider>
       {!perfFallback && <LabelLayer store={labelStore} />}
 
-      {showUi && !perfFallback && (
+      {/* sunum/kiosk: sade arayüz — düğmeler yok (kamera ve katmanlar klavyeyle), yalnız veri durumu okunaklı yazıyla */}
+      {stage && showUi && !perfFallback && (
+        <>
+          <div className="absolute bottom-5 left-5 z-10 flex flex-wrap items-center gap-3">
+            <LiveBadge compact className="!px-4 !py-1.5 !text-[15px]" />
+            <SampleDataBadge className="!px-4 !py-1.5 !text-[15px]" />
+            <span className="rounded-full border border-line bg-bg/80 px-4 py-1.5 font-mono text-[17px] text-dim backdrop-blur">
+              {scenario ?? ""} · {simDate ?? ""}
+            </span>
+          </div>
+          <div className="absolute right-5 top-5 z-10 rounded-full border border-line bg-bg/80 px-4 py-1.5 font-mono text-[17px] text-dim backdrop-blur">
+            kamera {preset} · {PRESETS.find((p) => p.key === preset)?.label}
+          </div>
+          <PartCard id={selected} onClose={() => setSelected(null)} stage />
+        </>
+      )}
+      {!stage && showUi && !perfFallback && (
         <>
           {/* kamera presetleri */}
           <div className="absolute left-3 top-3 z-10 flex max-w-[calc(100%-10.5rem)] flex-wrap gap-1.5" role="toolbar" aria-label="Kamera presetleri">

@@ -57,6 +57,8 @@ Windows PowerShell'de komutlar aynıdır (`npm run …`). Veritabanı boşsa uyg
 | `Shift`+`1`–`6` | 3D sahnesinde (4) kamera presetleri |
 | 3D içinde | `L` etiket · `X` toprak kesiti · `E` patlatılmış görünüm · `F` veri akışı · `C` bulut · `W` rüzgâr · `N` gece |
 
+Sunum 1920×1080 bir tuvalde tasarlanmıştır ve her ekrana **orantılı** sığar (tam ekran projeksiyon, adres çubuğu açık
+tarayıcı, dizüstü): düzen ve yazı oranları her yerde aynıdır; en-boy oranı farklıysa kenarda koyu boşluk kalır.
 Sahne hedef süreleri toplam ~12 dk (sayaç 15:00'ten geri sayar). `/sunucu`'daki her tuş ana ekrandaki sahneyi de
 değiştirir (SSE). Sahneye girişte gereken hazırlık otomatik yapılır: 6. sahnede kuraklık senaryosu yüklenir ve
 ödeme 8. sahneye kadar bekletilir, 9. sahnede manipülasyon senaryosu yüklenir.
@@ -126,7 +128,7 @@ npm run device:emulate          # k kuru · i ıslak · s sulama (şüpheli) · 
 | `npm run dry-run` | Sahne provası: motor, sağlık, sayfalar, 4 senaryo uçtan uca (karar → zincir → ödeme → SMS, hash yeniden hesaplanır), asistan, cihaz protokolü, sahne senkronu → `reports/dry-run.md` | 32/32 |
 | `npm run lint:facts` | Yasaklı/eskimiş rakam taraması + her rakamın kaynağı var mı | temiz |
 | `npm run perf` | Lighthouse (mobil) + 3D fps (gerçek GPU'da) → `reports/perf.md` | aşağıda |
-| `npm run screens` | Sunumu klavyeyle baştan sona oynatır, 22 yedek görüntü (+ `--video`), taşma/hata denetimi | hatasız |
+| `npm run screens` | Sunumu klavyeyle baştan sona oynatır, 22 yedek görüntü (+ `--video`), taşma/hata denetimi; `-- --boyut 1905x920` ile farklı ekran | hatasız (1920×1080, 1905×920, 1366×768) |
 
 Üretim derlemesinde ölçüm (Lighthouse mobil, uygulanan ağ/CPU kısıtlaması — yöntem notu için `DECISIONS.md`):
 

@@ -6,14 +6,14 @@ import { SimBadge } from "./Badges";
 import { cn } from "./cn";
 
 /** SMS ekranı (taklit). Gerçek bir operatör/banka arayüzü taklit edilmez; sade bir mesaj görünümü. */
-export function PhoneMock({ messages, stage = false, className }: { messages: SmsView[]; stage?: boolean; className?: string }) {
-  const w = stage ? 360 : 280;
+export function PhoneMock({ messages, stage = false, className, screenHeight }: { messages: SmsView[]; stage?: boolean; className?: string; screenHeight?: number }) {
+  const w = stage ? 380 : 280;
   const shown = messages.slice(0, 3);
   return (
     <div className={cn("relative", className)} style={{ width: w }}>
       <div className="rounded-[2.2rem] border-[3px] border-line-strong bg-[#0b120e] p-2.5 shadow-2xl">
-        <div className="flex flex-col overflow-hidden rounded-[1.7rem] bg-[#f4f1ea] text-[#16211b]" style={{ height: stage ? 560 : 440 }}>
-          <div className="flex items-center justify-between bg-[#e9e4d8] px-5 py-2 font-mono text-[0.7rem]">
+        <div className="flex flex-col overflow-hidden rounded-[1.7rem] bg-[#f4f1ea] text-[#16211b]" style={{ height: screenHeight ?? (stage ? 560 : 440) }}>
+          <div className={cn("flex items-center justify-between bg-[#e9e4d8] px-5 py-2 font-mono", stage ? "text-[15px]" : "text-[0.7rem]")}>
             <span>09:12</span>
             <span className="flex items-center gap-1">
               <Signal className="size-3" aria-hidden />
@@ -21,10 +21,10 @@ export function PhoneMock({ messages, stage = false, className }: { messages: Sm
             </span>
           </div>
           <div className="flex items-center gap-2 border-b border-black/10 px-4 py-2.5">
-            <span className="grid size-8 place-items-center rounded-full bg-[#2f9e6b] font-display text-sm font-extrabold text-white">A</span>
+            <span className={cn("grid place-items-center rounded-full bg-[#2f9e6b] font-display font-extrabold text-white", stage ? "size-10 text-[18px]" : "size-8 text-sm")}>A</span>
             <div>
-              <div className="text-sm font-semibold">AgriShield</div>
-              <div className="text-[0.68rem] text-black/55">SMS · +90 5** *** ** 17</div>
+              <div className={cn("font-semibold", stage ? "text-[20px]" : "text-sm")}>AgriShield</div>
+              <div className={cn("text-black/55", stage ? "text-[15px]" : "text-[0.68rem]")}>SMS · +90 5** *** ** 17</div>
             </div>
           </div>
           <div className="flex min-h-0 flex-1 flex-col justify-end gap-2.5 overflow-hidden p-3.5">
@@ -44,12 +44,12 @@ export function PhoneMock({ messages, stage = false, className }: { messages: Sm
                   className={cn(
                     "max-w-[92%] rounded-2xl rounded-tl-sm px-3.5 py-2.5 leading-snug shadow-sm",
                     m.kind === "erken" ? "bg-[#ece8fb]" : m.kind === "odeme" ? "bg-[#dff2e7]" : m.kind === "gri" ? "bg-[#f8ecd0]" : "bg-white",
-                    stage ? "text-[1.02rem]" : "text-[0.84rem]",
+                    stage ? "text-[21px]" : "text-[0.84rem]",
                   )}
                   data-testid="sms-bubble"
                 >
                   {m.text}
-                  <div className="mt-1 text-right font-mono text-[0.6rem] text-black/65">{new Date(m.at).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</div>
+                  <div className={cn("mt-1 text-right font-mono text-black/65", stage ? "text-[14px]" : "text-[0.6rem]")}>{new Date(m.at).toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -57,7 +57,7 @@ export function PhoneMock({ messages, stage = false, className }: { messages: Sm
         </div>
       </div>
       <div className="mt-2 flex justify-center">
-        <SimBadge label="SMS SİMÜLASYONU" title="SMS_MODE=mock: mesaj yalnızca bu ekranda görünür" />
+        <SimBadge label="SMS SİMÜLASYONU" title="SMS_MODE=mock: mesaj yalnızca bu ekranda görünür" className={stage ? "!px-4 !py-1.5 !text-[15px]" : undefined} />
       </div>
     </div>
   );
